@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import UserProfile from './pages/UserProfile'
+import UserProfile from './pages/UserProfile'
 
 function App() {
   const {user, isFilledUserprofile} = useAuthContext();
