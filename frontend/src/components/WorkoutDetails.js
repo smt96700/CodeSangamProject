@@ -1,11 +1,19 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 // date fns
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+// import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useAuthContext } from '../hooks/useAuthContext'
+const moment = require('moment-timezone');
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
  const {user}= useAuthContext();
+ 
+     
+const utcTimestamp = workout.createdAt;
+const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
+const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
+// Display the new timestamp in 'Asia/Kolkata' time zone
+
   const handleClick = async () => {
 
     if(!user){
@@ -27,7 +35,11 @@ const WorkoutDetails = ({ workout }) => {
       <h4>{workout.title}</h4>
       <p><strong>Load (kg): </strong>{workout.load}</p>
       <p><strong>Reps: </strong>{workout.reps}</p>
-      <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p>
+      {workout.message !== null && (
+        <p><strong>Message: </strong>{workout.message}</p>
+       )}
+       <p><strong>Amount: </strong>{workout.amount}</p>
+      <p>{dateTime}</p>
       <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
     </div>
   )

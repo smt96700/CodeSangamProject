@@ -9,7 +9,8 @@ const WorkoutForm = () => {
   const [reps, setReps] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-
+  const [message, setMessage]= useState('');
+  const [amount, setAmount]= useState(0);
   const handleSubmit = async (e) => {
     e.preventDefault()
     //check if logged in
@@ -17,7 +18,8 @@ const WorkoutForm = () => {
       setError('You must be logged in');
       return;
     }
-    const workout = {title, load, reps}
+    
+    const workout = {title, load, reps, message, amount};
 
     const response = await fetch('/api/workouts', {
       method: 'POST',
@@ -37,8 +39,10 @@ const WorkoutForm = () => {
       setTitle('')
       setLoad('')
       setReps('')
+      setMessage('')
       setError(null)
       setEmptyFields([])
+      setAmount(0)
       console.log('new workout added', json)
       dispatch({type: 'CREATE_WORKOUT', payload: json})
     }
@@ -71,7 +75,20 @@ const WorkoutForm = () => {
         value={reps}
         className={emptyFields.includes('reps') ? 'error' : ''}
       />
-
+      <label>Message:</label>
+      <input 
+        type="text"
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
+        className=''
+      />
+      <label>Amount:</label>
+       <input 
+        type="number"
+        onChange={(e) => setAmount(e.target.value)}
+        value={amount}
+        className=''
+      />
       <button>Add Workout</button>
       {error && <div className="error">{error}</div>}
     </form>
