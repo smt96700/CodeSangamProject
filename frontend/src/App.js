@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import UserProfileForm from './pages/UserProfileForm'
+import UserProfile from './pages/UserProfile'
 
 function App() {
   const {user, isFilledUserprofile} = useAuthContext();
@@ -18,10 +18,9 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={(user && isFilledUserprofile) ? <Home /> : (user ? <UserProfileForm /> : <Navigate to='/login' />)}
+              element={(user && isFilledUserprofile) ? <Home /> : (user ? <Navigate to = '/userProfile'/>  : <Navigate to='/login' />)}
             />
           <Route
-
             path= "/login"
             element={!user ? <Login /> : <Navigate to= '/' />}
            />
@@ -29,6 +28,12 @@ function App() {
             path= "/signup"
             element={!user ? <Signup /> : <Navigate to= '/' />}
            />
+           <Route
+            path= "/userProfile"
+            // element={!isFilledUserprofile ? <UserProfile/> : <Navigate to= '/' />}
+            element = {<UserProfile/>}
+           />
+
           </Routes>
         </div>
       </BrowserRouter>

@@ -11,6 +11,7 @@ const WorkoutForm = () => {
   const [emptyFields, setEmptyFields] = useState([])
   const [message, setMessage]= useState('');
   const [amount, setAmount]= useState(0);
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     //check if logged in
@@ -66,7 +67,7 @@ const WorkoutForm = () => {
         onChange={(e) => setLoad(e.target.value)}
         value={load}
         className={emptyFields.includes('load') ? 'error' : ''}
-      />
+      /> 
 
       <label>Reps:</label>
       <input 
