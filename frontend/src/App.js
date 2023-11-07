@@ -6,8 +6,10 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import UserProfileForm from './pages/UserProfileForm'
+
 function App() {
-  const {user}= useAuthContext();
+  const {user, isFilledUserprofile} = useAuthContext();
   return (
     <div className="App">
       <BrowserRouter>
@@ -16,9 +18,10 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Home /> : <Navigate to='/login' />}
+              element={(user && isFilledUserprofile) ? <Home /> : (user ? <UserProfileForm /> : <Navigate to='/login' />)}
             />
           <Route
+
             path= "/login"
             element={!user ? <Login /> : <Navigate to= '/' />}
            />
