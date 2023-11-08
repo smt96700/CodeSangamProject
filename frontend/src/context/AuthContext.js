@@ -5,15 +5,17 @@ export const AuthContext= createContext(); //creating context
 export const AuthReducer= (state, action)=>{
       switch(action.type){
         case 'SIGNUP' : 
+            console.log("sign up chala")
             const newUser = action.payload;
-            return {user : newUser, isFilledUserprofile : false};
+            return {user : newUser};
             
         case 'LOGIN':
+            console.log("Login chla")
             const user= action.payload;
-            return {user, isFilledUserprofile : true};
+            return {user};
 
         case 'LOGOUT':
-            return {user: null, isFilledUserprofile : true};
+            return {user: null};
 
         
         default:
@@ -23,11 +25,11 @@ export const AuthReducer= (state, action)=>{
 
 //function that provides value for context
 export const AuthContextProvider= ({children})=>{
-       const [state, dispatch]= useReducer(AuthReducer, {user:null, isFilledUserprofile:false});
+       const [state, dispatch]= useReducer(AuthReducer, {user:null});
+       
        //check if the user data already exist in local storage
        useEffect(()=>{
            const user= JSON.parse(localStorage.getItem('user'));
-
         //    console.log(user);
            if(user){
             dispatch({type: "LOGIN", payload:user});

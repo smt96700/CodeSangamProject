@@ -3,11 +3,13 @@ import {useLogout} from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const Navbar = () => {
-     const {logout}= useLogout();
-      const {user}= useAuthContext();
-     const handleClick=()=>{
-         logout();
-     }
+    const {logout}= useLogout();
+    const {user}= useAuthContext();
+
+    //handle click
+    const handleClick=()=>{
+        logout();
+    }
 
   return (
     <header>
@@ -20,7 +22,7 @@ const Navbar = () => {
            <div>
             <button onClick={handleClick}> {user.email} Log out</button>
           </div>
-            )}
+          )}
 
           {!user && ( 
           <div>

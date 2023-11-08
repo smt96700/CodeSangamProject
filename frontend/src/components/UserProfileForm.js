@@ -1,46 +1,55 @@
 import { useState } from "react"
+import { useProfileContext } from '../hooks/useProfileContext'
+
 
 function UserProfileForm() {
     const [name, setName] = useState('')
-    const [dob, setDob] = useState('')
-    const [gender,setGender] = useState('')
+    const [dateOfBirth, setDateOfBirth] = useState('')
+    const [gender,setGender] = useState('male')
     const [contactNumber, setContactNumber] = useState('')
     const [currency, setCurrency] = useState('INR')
-    const [monthlySalary, setMonthlySalary] = useState('')
-    const [monthlyExpense, setMonthlyExpense] = useState('')
+    const [monthlySalary, setMonthlySalary] = useState(0)
+    const [monthlyExpense, setMonthlyExpense] = useState(0)
     const [country, setCountry] = useState('')
     const [state, setState] = useState('')
     const [city, setCity] = useState('')
     const [error, setError] = useState(null)
-    const [emptyFields, setEmptyFields] = useState([])
+    const [emptyFields, setEmptyFields] = useState([]) 
+
+    //including dispatch fun
+    const {dispatch} = useProfileContext()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        const profileInfo = {name, dob, gender, contactNumber, currency, monthlySalary, monthlyExpense, country, state, city}
+        console.log("Inside handle submit")
+        const profileInfo = {name, dateOfBirth, gender, contactNumber, currency, monthlySalary, monthlyExpense, country, state, city}
+        console.log(gender)
+        console.log(profileInfo)
 
         const response = await fetch ('/api/profile/createProfile', { 
             method : 'POST',
             body : JSON.stringify(profileInfo),
             headers : {
-                'Content-Type' : 'application.json'  //to specify that the data is in json format
+                'Content-Type' : 'application/json'  //to specify that the data is in json format
             }
         })
 
         const json = await response.json()
 
         if (!response.ok) {
+            console.log("Error h")
             setError(json.error)
             setEmptyFields(json.emptyFields)
+            console.log(json.emptyFields)
           }
         if (response.ok) {
             setName('')
-            setDob('')
+            setDateOfBirth('')
             setGender('')
             setContactNumber('')
             setCurrency('')
-            setMonthlyExpense('')
-            setMonthlySalary('')
+            setMonthlyExpense(0)
+            setMonthlySalary(0)
             setCity('')
             setCountry('')
             setState('')
@@ -48,7 +57,7 @@ function UserProfileForm() {
             setError(null)
 
             console.log('profile added')
-            //dispatch({type: 'CREATE_WORKOUT', payload: json})
+            dispatch({type : 'PROFILEADDED'})
         }
     }
 
@@ -68,9 +77,9 @@ function UserProfileForm() {
                 <label>Date of Birth:</label>
                 <input
                     type="date"
-                    onChange={(e) => setDob(e.target.value)}
-                    value={dob}
-                    className={emptyFields.includes('dob') ? 'error' : ''}
+                    onChange={(e) => setDateOfBirth(e.target.value)} 
+                    value={dateOfBirth}
+                    className={emptyFields.includes('dateOfBirth') ? 'error' : ''}
                 />
 
                 <label>Gender:</label>

@@ -9,9 +9,10 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const Home = () => {
   const {workouts, dispatch} = useWorkoutsContext()
-  const {user, isFilledUserProfile}= useAuthContext();
+  const {user}= useAuthContext();
+
   useEffect(() => {
-    console.log(isFilledUserProfile)
+    console.log("chal rha h")
     const fetchWorkouts = async () => {
       const response = await fetch('/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
       const json = await response.json()
@@ -23,7 +24,7 @@ const Home = () => {
      if(user){
       fetchWorkouts()
      }
-  }, [dispatch, user, isFilledUserProfile])
+  }, [dispatch, user])
 
   return (
     <div className="home">
