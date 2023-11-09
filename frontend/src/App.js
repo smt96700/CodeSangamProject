@@ -14,24 +14,13 @@ import UserProfile from './pages/UserProfile'
 function App() {
   const {user} = useAuthContext();
   const {isFilledUserProfile} = useProfileContext();
-
+  console.log(user, "inside app");
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <div className="pages">
-
-        <Routes>
-          <Route 
-            path = '/'
-            element = {}
-          />
-        </Routes>
-
-
-
-
-          {/* <Routes>
+          <Routes>
             <Route
               path = "/home"
               element = {!user ? <Navigate to = '/login'/> : <Home/>}
@@ -39,11 +28,11 @@ function App() {
 
             <Route 
               path="/"
-              element={(user && isFilledUserProfile) ? <Home /> : (user ? <Navigate to = '/userProfile'/>  : <Navigate to='/login' />)}
+              element={(user && user.isFilledUserProfile) ? <Home /> : (user ? <Navigate to = '/userProfile'/>  : <Navigate to='/login' />)}
             />
           <Route
             path= "/login"
-            element={!user ? <Login /> : <Navigate to = '/home'/>}
+            element={(!user ? <Login /> : (!user.isFilledUserProfile ?  <Navigate to= '/userProfile' /> : <Navigate to = '/home'/>))}
            /> 
            <Route
             path= "/signup"
@@ -52,10 +41,10 @@ function App() {
            <Route
             path= "/userProfile"
             //element={!isFilledUserProfile ? <UserProfile/> : <Navigate to= '/home' />}
-            element = {(!user?  <Navigate to = '/login'/> : (!isFilledUserProfile ?  <UserProfile/> : <Navigate to = '/home'/>))}
+            element = {<UserProfile/>}
            />
 
-          </Routes> */}
+          </Routes>
         </div>
       </BrowserRouter>
     </div>

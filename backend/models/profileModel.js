@@ -44,6 +44,9 @@ const profileSchema = new Schema(
       type: String,
       required: true,
     },
+    email:{
+      type: String
+    }
     // Additional fields can be added here as needed
   },
   { timestamps: true }

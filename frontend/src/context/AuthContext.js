@@ -29,6 +29,7 @@ export const AuthContextProvider= ({children})=>{
        
        //check if the user data already exist in local storage
        useEffect(()=>{
+           console.log("inside use effect");
            const user= JSON.parse(localStorage.getItem('user'));
         //    console.log(user);
            if(user){

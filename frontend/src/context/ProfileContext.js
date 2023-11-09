@@ -17,9 +17,9 @@ export const ProfileContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(ProfileReducer, {isFilledUserProfile : false})
 
     // useEffect (() => {
-
-    // })
-
+         
+    // }, [])
+    
     return (
         <ProfileContext.Provider value={{...state, dispatch}}>
             {children}

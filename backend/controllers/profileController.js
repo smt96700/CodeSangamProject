@@ -1,3 +1,5 @@
+
+const User= require('../models/userModel');
 const Profile = require("../models/profileModel");
 
 //function to create a new profile
@@ -13,6 +15,7 @@ const createProfile = async function (req, res) {
     country,
     state,
     city,
+    email
   } = req.body;
 
   const emptyFields = [];
@@ -47,6 +50,7 @@ const createProfile = async function (req, res) {
   if (!city) {
     emptyFields.push("city");
   }
+
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -67,8 +71,11 @@ const createProfile = async function (req, res) {
         country,
         state,
         city,
+        email
     });
+    const user= await User.findOneAndUpdate({email: email}, { $set: { isFilledUserProfile: true } });
     res.status(200).json(profile);
+    
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

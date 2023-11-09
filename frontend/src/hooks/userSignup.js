@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
-import { useHistory } from 'react-router-dom';
 
 
 export const useSignup = () => {
@@ -8,7 +7,6 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(null)
   const { dispatch } = useAuthContext()
 
-  const history = useHistory();
 
   const signup = async (email, password) => {
     setIsLoading(true)
@@ -37,7 +35,6 @@ export const useSignup = () => {
       setIsLoading(false)
 
       //redirect to create user profile
-      history.push('/createProfile');
     }
   }
 

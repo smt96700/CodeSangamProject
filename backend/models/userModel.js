@@ -5,6 +5,10 @@ const Schema= mongoose.Schema;
 
 
 const userSchema= new Schema({
+    isFilledUserProfile:{
+        type: Boolean,
+        default: false
+    },  
     email: {
         type: String,
         required: true,
