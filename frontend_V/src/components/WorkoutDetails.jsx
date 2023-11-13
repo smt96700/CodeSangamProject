@@ -32,8 +32,8 @@ const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
   return (
     <div className="workout-details">
       <h4>{workout.title}</h4>
-      <p><strong>Load (kg): </strong>{workout.load}</p>
-      <p><strong>Reps: </strong>{workout.reps}</p>
+      <p><strong>Payment Method: </strong>{workout.method}</p>
+      <p><strong>Payee: </strong>{workout.payee}</p>
       {workout.message !== null && (
         <p><strong>Message: </strong>{workout.message}</p>
        )}

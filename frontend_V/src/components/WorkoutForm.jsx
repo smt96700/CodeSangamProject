@@ -5,8 +5,8 @@ const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
   const {user}= useAuthContext();
   const [title, setTitle] = useState('')
-  const [load, setLoad] = useState('')
-  const [reps, setReps] = useState('')
+  const [method, setMethod] = useState('')
+  const [payee, setPayee] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
   const [message, setMessage]= useState('');
@@ -20,7 +20,7 @@ const WorkoutForm = () => {
       return;
     }
     
-    const workout = {title, load, reps, message, amount};
+    const workout = {title, method, payee, message, amount};
 
     const response = await fetch('http://localhost:4000/api/workouts', {
       method: 'POST',
@@ -38,8 +38,8 @@ const WorkoutForm = () => {
     }
     if (response.ok) {
       setTitle('')
-      setLoad('')
-      setReps('')
+      setMethod('')
+      setPayee('')
       setMessage('')
       setError(null)
       setEmptyFields([])
@@ -51,8 +51,7 @@ const WorkoutForm = () => {
 
   return (
     <form className="create" onSubmit={handleSubmit}>
-      <h3>Add a New Expense</h3>
-
+      <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-mono font-light underline">Add Expense</h1>
       <label>Expense Title:</label>
       <input 
         type="text"
@@ -61,20 +60,20 @@ const WorkoutForm = () => {
         className={emptyFields.includes('title') ? 'error' : ''}
       />
 
-      <label>Load:</label>
+      <label>Payment Method:</label>
       <input 
-        type="number"
-        onChange={(e) => setLoad(e.target.value)}
-        value={load}
-        className={emptyFields.includes('load') ? 'error' : ''}
+        type="String"
+        onChange={(e) => setMethod(e.target.value)}
+        value={method}
+        className={emptyFields.includes('method') ? 'error' : ''}
       /> 
 
-      <label>Reps:</label>
+      <label>Payee:</label>
       <input 
-        type="number"
-        onChange={(e) => setReps(e.target.value)}
-        value={reps}
-        className={emptyFields.includes('reps') ? 'error' : ''}
+        type="String"
+        onChange={(e) => setPayee(e.target.value)}
+        value={payee}
+        className={emptyFields.includes('payee') ? 'error' : ''}
       />
       <label>Message:</label>
       <input 

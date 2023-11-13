@@ -7,12 +7,12 @@ const workoutSchema = new Schema({
     type: String,
     required: true
   },
-  reps: {
-    type: Number,
+  payee: {
+    type: String,
     required: true
   },
-  load: {
-    type: Number,
+  method: {
+    type: String,
     required: true
   },
   user_id:{
