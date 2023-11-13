@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import {useLogout} from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useProfileContext } from '../hooks/useProfileContext';
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
@@ -9,9 +10,31 @@ const Navbar = () => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
     const {isFilledUserProfile}= useProfileContext();
+    const {profileInfo, dispatch} = useProfileContext()
+    const navigate = useNavigate()
     
     const handleClick=()=>{
         logout();
+    }
+
+    const fetchProfile = () => {
+      const getProfile = async () => {
+        console.log("fetched profile")
+
+        const email = user.email
+        console.log(email)
+        const encodedEmail = encodeURIComponent(email);
+        const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
+        const json = await response.json()
+
+        if (response.ok) {
+          dispatch({type: 'PROFILEADDED', payload: json})
+          navigate('/profile')
+        }
+      } 
+      if (user) {
+        getProfile()
+      }
     }
 
   return (
@@ -25,9 +48,15 @@ const Navbar = () => {
           </div>
         </Link>
         <nav>
-          {user && ( 
+          {user && user.isFilledUserProfile &&( 
            <div>
-            <Button onClick={handleClick} variant="contained" endIcon={<SendIcon />}> Log out</Button>
+            <Button onClick={fetchProfile} variant="contained" endIcon={<SendIcon />}> profile</Button>
+          </div>
+          )}
+
+          {user &&( 
+           <div>
+            <Button onClick={handleClick} variant="contained" endIcon={<SendIcon />}>Log Out</Button>
           </div>
           )}
 

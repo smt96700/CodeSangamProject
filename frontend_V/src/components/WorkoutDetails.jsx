@@ -6,7 +6,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import moment from 'moment-timezone';
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
- const {user}= useAuthContext();
+  const {user}= useAuthContext();
      
 const utcTimestamp = workout.createdAt;
 const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');

@@ -6,7 +6,8 @@ export const ProfileReducer = (state, action) => {
     switch(action.type) {
         case 'PROFILEADDED' :
             console.log("inside profile added")
-            return {isFilledUserProfile : true}
+            console.log(action.payload)
+            return {isFilledUserProfile : true, profileInfo : action.payload}
 
         default :
             return state
@@ -14,7 +15,7 @@ export const ProfileReducer = (state, action) => {
 }
 
 export const ProfileContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(ProfileReducer, {isFilledUserProfile : false})
+    const [state, dispatch] = useReducer(ProfileReducer, {isFilledUserProfile : false, profileInfo : null})
 
     // useEffect (() => {
          
