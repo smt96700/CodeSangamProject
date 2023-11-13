@@ -1,1 +1,1 @@
-# dummy-project
+# Expense buddy
