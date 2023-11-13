@@ -2,10 +2,14 @@ import { useState } from "react";
 // import { useProfileContext } from '../hooks/useProfileContext'
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+
 function UserProfileForm() {
   const [name, setName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [currency, setCurrency] = useState("INR");
   const [monthlySalary, setMonthlySalary] = useState(0);
@@ -89,8 +93,8 @@ function UserProfileForm() {
 
   return (
     <>
-      <form className="create" onSubmit={handleSubmit}>
-        <h3>Add some Info</h3>
+      <form className="create_profile" onSubmit={handleSubmit}>
+      <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light font-serif">Let Us know about you...</h1>
 
         <label>Name:</label>
         <input
@@ -108,16 +112,25 @@ function UserProfileForm() {
           className={emptyFields.includes("dateOfBirth") ? "error" : ""}
         />
 
-        <label>Gender:</label>
-        <select
-          onChange={(e) => setGender(e.target.value)}
+        <br/>
+        <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          label="Gender"
+          size = "small"
           value={gender}
+          onChange={(e) => setGender(e.target.value)}
           className={emptyFields.includes("gender") ? "error" : ""}
         >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="male">Male</MenuItem>
+          <MenuItem value="female">Female</MenuItem>
+          <MenuItem value="other">Other</MenuItem>
+        </Select>
+        <br/><br/>
 
         <label>Contact Number:</label>
         <input

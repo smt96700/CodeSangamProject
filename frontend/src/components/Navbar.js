@@ -17,7 +17,7 @@ const Navbar = () => {
     <header>
       <div className="container">
         <Link to="/home">
-          <h1>Workout Buddy</h1>
+          <p>Expense Buddy</p>
         </Link>
         <nav>
           {user && ( 
