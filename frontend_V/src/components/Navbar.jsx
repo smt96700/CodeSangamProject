@@ -3,13 +3,17 @@ import {useLogout} from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useProfileContext } from '../hooks/useProfileContext';
 import { useNavigate } from "react-router-dom";
+import * as React from 'react';
 import Button from '@mui/material/Button';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Person2Icon from '@mui/icons-material/Person2';
+import WorkoutForm from './WorkoutForm';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+
 const Navbar = () => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
-    const {isFilledUserProfile}= useProfileContext();
     const {profileInfo, dispatch} = useProfileContext()
     const navigate = useNavigate()
     
@@ -36,6 +40,25 @@ const Navbar = () => {
         getProfile()
       }
     }
+    
+    // for the drawer
+    const [state, setState] = React.useState({
+      top: false,
+    });
+    
+    //function to change state of drawer - open/close
+    const toggleDrawer = (anchor, open) => (event) => {
+      setState({ ...state, [anchor]: open });
+    };
+    
+    //content inside drawer
+    const list = (anchor) => (
+      <Box
+        sx = {{margin : "20px"}}
+      >
+        <WorkoutForm/>
+      </Box>
+    )
 
   return (
     <header>
@@ -49,9 +72,29 @@ const Navbar = () => {
         </Link>
         <nav>
           {user && user.isFilledUserProfile &&( 
-           <div className='m-2'>
-            <Button onClick={fetchProfile} variant="contained" endIcon={<Person2Icon />}> profile </Button>
-          </div>
+              <div className='flex'>
+                <div className='mx-4'>
+                  {['top'].map((anchor) => (
+                    <React.Fragment key={anchor}>
+                      <Button variant="contained" onClick={toggleDrawer(anchor, true)}>Add Expense</Button>
+                      <Drawer
+                        PaperProps={{
+                          sx: { width: "60%", marginLeft : "20%", marginTop : '10px', borderRadius : "4px"},
+                        }}
+                        anchor={anchor}
+                        open={state[anchor]}
+                        onClose={toggleDrawer(anchor, false)}
+                      >
+                        {list(anchor)}
+                      </Drawer>
+                    </React.Fragment>
+                  ))}
+                </div>
+
+                <div className='mx-1'>
+                  <Button onClick={fetchProfile} variant="contained" endIcon={<Person2Icon />}> profile </Button>
+                </div>
+              </div>
           )}
 
           {user &&( 
