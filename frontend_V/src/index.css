@@ -147,4 +147,16 @@ form.create_profile {
   padding: 20px;
   background: #fff;
   border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+
+}
+
+div.profile {
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+
 }

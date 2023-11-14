@@ -4,8 +4,8 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useProfileContext } from '../hooks/useProfileContext';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import Person2Icon from '@mui/icons-material/Person2';
 const Navbar = () => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
@@ -49,21 +49,21 @@ const Navbar = () => {
         </Link>
         <nav>
           {user && user.isFilledUserProfile &&( 
-           <div>
-            <Button onClick={fetchProfile} variant="contained" endIcon={<SendIcon />}> profile</Button>
+           <div className='m-2'>
+            <Button onClick={fetchProfile} variant="contained" endIcon={<Person2Icon />}> profile </Button>
           </div>
           )}
 
           {user &&( 
            <div>
-            <Button onClick={handleClick} variant="contained" endIcon={<SendIcon />}>Log Out</Button>
+            <Button onClick={handleClick} variant="contained" endIcon={<ArrowOutwardIcon />}>Log Out</Button>
           </div>
           )}
 
           {!user && ( 
           <div>
-        <Link to="/login" className = "mx-3 px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200" >{isFilledUserProfile} Login</Link>
-        <Link to="/signup" className = "px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200">{isFilledUserProfile} Signup</Link>
+        <Link to="/login" className = "mx-3 px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200" > Login</Link>
+        <Link to="/signup" className = "px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200"> Signup</Link>
         </div>
           )}
         </nav>

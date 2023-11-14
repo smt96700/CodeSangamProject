@@ -27,10 +27,10 @@ function App() {
               element = {!user ? <Navigate to = '/login'/> : <Home/>}
             />
 
-            {/* <Route 
+            <Route 
               path="/"
               element={(user && user.isFilledUserProfile) ? <Home /> : (user ? <Navigate to = '/userProfile'/>  : <Navigate to='/login' />)}
-            /> */}
+            />
 
             <Route
               path= "/login"
