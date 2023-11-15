@@ -117,7 +117,6 @@ function UserProfileForm() {
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
-          label="Gender"
           size = "small"
           value={gender}
           onChange={(e) => setGender(e.target.value)}

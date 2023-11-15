@@ -54,7 +54,7 @@ const Navbar = () => {
     //content inside drawer
     const list = (anchor) => (
       <Box
-        sx = {{margin : "20px"}}
+        sx = {{margin : "40px"}}
       >
         <WorkoutForm/>
       </Box>
