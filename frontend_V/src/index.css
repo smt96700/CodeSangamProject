@@ -40,7 +40,7 @@ header h1 {
 }
 .pages{
   max-width: 1400px;
-  padding: 80px;
+  padding-top : 40px;
   margin: 0 auto;
 }
 
@@ -48,7 +48,11 @@ header h1 {
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 100px;
+  gap: 50px;
+}
+.workouts {
+  display : flex;
+  flex-wrap: wrap;
 }
 .workout-details {
   background: #fff;
@@ -57,6 +61,7 @@ header h1 {
   padding: 20px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  width : 380px;
 }
 .workout-details h4 {
   margin: 0 0 10px 0;

@@ -8,10 +8,10 @@ const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
   const {user}= useAuthContext();
      
-const utcTimestamp = workout.createdAt;
-const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
-const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
-// Display the new timestamp in 'Asia/Kolkata' time zone
+  const utcTimestamp = workout.createdAt;
+  const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
+  const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
+  // Display the new timestamp in 'Asia/Kolkata' time zone
 
   const handleClick = async () => {
 
@@ -42,7 +42,7 @@ const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
        <p><strong>Amount: </strong>{workout.amount}</p>
       <p>{dateTime}</p>
       <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
-    </div>
+    </div> 
   )
 }
 

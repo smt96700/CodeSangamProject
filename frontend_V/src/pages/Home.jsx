@@ -1,11 +1,11 @@
 import { useEffect }from 'react'
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
-
 // components
 import WorkoutDetails from '../components/WorkoutDetails'
-import WorkoutForm from '../components/WorkoutForm'
+
 //authContext
 import { useAuthContext } from '../hooks/useAuthContext'
+import ChartOnCategory from '../charts/pieChart/ChartOnCategory'
 const Home = () => {
   const {workouts, dispatch} = useWorkoutsContext()
   const {user}= useAuthContext();
@@ -32,6 +32,9 @@ const Home = () => {
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
+      {workouts && 
+        <ChartOnCategory workouts = {workouts}/>
+      }
     </div>
   )
 }
