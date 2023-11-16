@@ -16,7 +16,7 @@ const WorkoutForm = () => {
   const [payee, setPayee] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-  const [message, setMessage]= useState('');
+  const [message, setMessage]= useState();
   const [amount, setAmount]= useState();
   const [isRecurring, setIsRecurring] = useState('No')
   const [isDisabled, setIsDisabled] = useState(true)
@@ -52,7 +52,7 @@ const WorkoutForm = () => {
       setMethod('')
       setStatus('')
       setPayee('')
-      setMessage('')
+      setMessage()
       setError(null)
       setEmptyFields([])
       setAmount()

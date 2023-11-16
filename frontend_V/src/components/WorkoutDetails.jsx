@@ -1,4 +1,5 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
 // date fns
 // import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -11,6 +12,12 @@ const WorkoutDetails = ({ workout }) => {
   const utcTimestamp = workout.createdAt;
   const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
   const dateTime= newTimestamp.format("dddd, MMMM D, YYYY, h:mm:ss A z")
+
+  const utc = workout.recurringTime;
+  const newutc = moment(utc).tz('Asia/Kolkata');
+  const date= newutc.format("MMMM D, YYYY")
+
+
   // Display the new timestamp in 'Asia/Kolkata' time zone
 
   const handleClick = async () => {
@@ -31,17 +38,38 @@ const WorkoutDetails = ({ workout }) => {
  
   return (
     <div className="workout-details">
-      <h4>{workout.category}</h4>
-      <h4>{workout.description}</h4>
-      <p><strong>Payment Method: </strong>{workout.method}</p>
-      <p><strong>Payment Status: </strong>{workout.status}</p>
-      <p><strong>Payee: </strong>{workout.payee}</p>
+
+      <h1 className = "mb-5 flex text-xl font-medium text-indigo-700  underline">{workout.category}</h1>
+
+      <p><strong className='font-semibold'>Description: </strong>{workout.description}</p>
+      <p><strong className='font-semibold'>Payee: </strong>{workout.payee}</p>
+
       {workout.message !== null && (
-        <p><strong>Message: </strong>{workout.message}</p>
+        <p><strong className='font-semibold'>Message: </strong>{workout.message}</p>
        )}
-       <p><strong>Amount: </strong>{workout.amount}</p>
+
+      {workout.message === null && (
+        <p><strong className='font-semibold'>Message: </strong> --</p>
+       )}
+
+<p><strong className='font-semibold'>Recurring: </strong>{workout.isRecurring}</p>
+      
+      {workout.isRecurring === 'Yes' && (
+        <p><strong className='font-semibold'>Next Scheduled Pay: </strong>{date}</p>
+      )}
+
+      <hr className='mt-3 mb-3'></hr>
+
+
+      <div className = "flex mt-3 mb-3">
+        <h1 className = "mr-6 font-medium  text-indigo-600 text-lg">{workout.amount} /-</h1>
+        <h1 className = " rounded-lg px-3 border-solid border-2 border-indigo-300 mr-6 bg-indigo-100"> {workout.method}</h1>
+        <h1 className = " rounded-lg px-3 border-solid border-2 border-indigo-300 mr-6 bg-indigo-100">{workout.status}</h1>
+      </div>
+
       <p>{dateTime}</p>
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+      <span><DeleteSweepIcon onClick={handleClick}></DeleteSweepIcon></span>
+      
     </div> 
   )
 }
