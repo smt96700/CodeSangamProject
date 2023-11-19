@@ -9,7 +9,7 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import UserProfile from './pages/UserProfile'
-
+import Friends from './components/Friends'
 
 function App() {
   const {user} = useAuthContext();
@@ -43,7 +43,8 @@ function App() {
             //element={!isFilledUserProfile ? <UserProfile/> : <Navigate to= '/home' />}
             element = {<UserProfile/>}
            />
-
+           <Route path= '/friends' element= {user ? <Friends /> : <Navigate to = '/home' />}
+           />
           </Routes>
         </div>
       </BrowserRouter>

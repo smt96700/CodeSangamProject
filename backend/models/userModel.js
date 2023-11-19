@@ -17,6 +17,19 @@ const userSchema= new Schema({
     password: {
         type: String, 
         required: true
+    }, 
+    friends: [{
+        username: {
+            type: String,
+        },
+        connected: {
+            type: Boolean,
+            default: false
+        }
+    }],
+    connected: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps:true});
 
@@ -42,7 +55,7 @@ userSchema.statics.signup= async function(email, password){
     //generate salt
     const salt= await bcrypt.genSalt(10);
     const hash= await bcrypt.hash(password, salt);
-    const user = await this.create({email, password: hash});
+    const user = await this.create({email, password: hash, connected: true});
     return user;
 
 }
@@ -61,6 +74,21 @@ userSchema.statics.signin= async function(email, password){
        if(!match){
         throw Error('Incorrect password');
        }
+
+       // Update the connected field to true
+        await this.updateOne({ email }, { connected: true });
        return user;
 }
+
+
+userSchema.statics.signout= async function(email){
+
+     // Update the connected field to false
+     const user= await this.updateOne({ email }, { connected: false });
+    if(!user){
+     throw Error('Invalid user');
+    }
+    return user;
+}
+
 module.exports= mongoose.model('User', userSchema);

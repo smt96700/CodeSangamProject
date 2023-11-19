@@ -15,7 +15,8 @@ const loginUser= async (req, res)=>{
         const user= await User.signin(email, password);
         const token= createToken(user._id);
         const isFilledUserProfile= user.isFilledUserProfile;
-        res.status(200).json({email, token, isFilledUserProfile});
+        const userid= user._id;
+        res.status(200).json({email, token, isFilledUserProfile, userid});
     }
     catch(error){
         res.status(400).json({error: error.message});
@@ -32,8 +33,9 @@ const signupUser= async (req, res)=>{
         //creating a token 
         const token= createToken(user._id);
         const isFilledUserProfile= user.isFilledUserProfile;
+        const userid= user._id;
         // console.log(token);
-        res.status(200).json({email, token, isFilledUserProfile});
+        res.status(200).json({email, token, isFilledUserProfile, userid});
 
     }
     catch(error){
@@ -42,4 +44,14 @@ const signupUser= async (req, res)=>{
     // res.json({mssg:'signup user'});
 }
 
-module.exports= {loginUser, signupUser};
+const logoutUser= async (req, res)=>{
+    const {email}= req.body;
+    try{
+    const user= await User.signout(email);
+    res.status(200).json(user);
+    }
+    catch(error){
+        res.status(400).json({error: error.message});
+    }
+}
+module.exports= {loginUser, signupUser, logoutUser};
