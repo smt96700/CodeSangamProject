@@ -1,6 +1,7 @@
 /* layout */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Wellfleet&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -40,7 +41,7 @@ header h1 {
 }
 .pages{
   max-width: 1400px;
-  padding: 80px;
+  padding-top : 40px;
   margin: 0 auto;
 }
 
@@ -48,24 +49,25 @@ header h1 {
 .home {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 100px;
+  gap: 50px;
+}
+.workouts {
+  display : flex;
+  flex-wrap: wrap;
 }
 .workout-details {
   background: #fff;
-  border-radius: 4px;
+  border-radius: 8px;
   margin: 20px auto;
   padding: 20px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  width : 380px;
 }
-.workout-details h4 {
-  margin: 0 0 10px 0;
-  font-size: 1.2em;
-  color: var(--primary);
-}
+
 .workout-details p {
-  margin: 0;
-  font-size: 0.9em;
+  margin-bottom: 4px;
+  font-size: 0.95em;
   color: #555;
 }
 .workout-details span {
@@ -73,10 +75,7 @@ header h1 {
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background: #f1f1f1;
   padding: 6px;
-  border-radius: 50%;
-  color: #333;
 }
 
 
@@ -88,7 +87,7 @@ input {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(0, 0, 0, 0.3);
   border-radius: 4px;
   box-sizing: border-box;
 }
@@ -147,4 +146,16 @@ form.create_profile {
   padding: 20px;
   background: #fff;
   border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+
+}
+
+div.profile {
+  max-width: 800px;
+  margin: 10px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+
 }

@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const getWorkouts = async (req, res) => {
   const user_id= req.user._id;
   const workouts = await Workout.find({user_id}).sort({createdAt: -1})
-  
+  console.log(workouts)
   res.status(200).json(workouts)
 }
 
@@ -29,15 +29,21 @@ const getWorkout = async (req, res) => {
 
 // create new workout
 const createWorkout = async (req, res) => {
-  const {title, payee, method, message, amount} = req.body
+  const {category, description, method, status, payee, message, amount, isRecurring, recurringTime} = req.body
   
   let emptyFields = []
 
-  if(!title) {
-    emptyFields.push('title')
+  if(!category) {
+    emptyFields.push('category')
+  }
+  if(!description) {
+    emptyFields.push('description')
   }
   if(!method) {
     emptyFields.push('method')
+  }
+  if(!status) {
+    emptyFields.push('status')
   }
   if(!payee) {
     emptyFields.push('payee')
@@ -49,7 +55,7 @@ const createWorkout = async (req, res) => {
   // add doc to db
   try {
     const user_id= req.user._id;
-    const workout = await Workout.create({title, method, payee, user_id, message, amount})
+    const workout = await Workout.create({category, description, method, status, payee, message, amount, isRecurring, recurringTime, user_id})
     res.status(200).json(workout)
   } catch (error) {
     res.status(400).json({error: error.message})
