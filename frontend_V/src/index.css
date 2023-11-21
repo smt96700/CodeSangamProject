@@ -54,6 +54,7 @@ header h1 {
 .workouts {
   display : flex;
   flex-wrap: wrap;
+  max-height: 380px;
 }
 .workout-details {
   /* background: #fff; */

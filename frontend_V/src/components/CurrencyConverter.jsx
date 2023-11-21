@@ -54,7 +54,7 @@ import UseCurrencyInfo from '../hooks/UseCurrencyInfo';
 import InputBox from './InputBox';
 
 function CurrencyConverter() {
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState(0);
   const [from, setFrom] = useState('usd');
   const [to, setTo] = useState('inr');
   const [convertedAmount, setConvertedAmount] = useState(0);
