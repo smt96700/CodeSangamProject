@@ -101,7 +101,7 @@ function UserProfileForm() {
     <>
       <form className={`create_profile ${isDarkMode? 'bg-zinc-700' : 'bg-white'}`} onSubmit={handleSubmit}>
       <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light font-serif">Let Us know about you...</h1>
-
+        
         <label>Name:</label>
         <input
           type="text"

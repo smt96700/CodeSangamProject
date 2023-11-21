@@ -14,10 +14,14 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import UserProfile from './pages/UserProfile'
 import Profile from './pages/Profile'
-
+import Friends from './components/Friends'
 
 function App() {
   const {user} = useAuthContext();
+  // const userLocal= localStorage.getItem('user');
+  //  const parsedUserLocal=  userLocal ? JSON.parse(userLocal) : userLocal;
+  
+  // console.log("inside app userLocal", userLocal.isFilledUserProfile);
   const {isFilledUserProfile} = useProfileContext();
   console.log(user, "inside app");
 
@@ -75,7 +79,8 @@ function App() {
               path= "/userProfile"
               element = {<UserProfile/>}
             />
-
+           <Route path= '/friends' element= {(user) ? <Friends /> : <Navigate to = '/home' />}
+           />
             <Route 
               path = "/profile"
               element = {(user) ? (user.isFilledUserProfile ? <Profile/> : <Navigate to= '/userProfile' />) : <Navigate to='/login' />}

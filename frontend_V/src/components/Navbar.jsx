@@ -23,6 +23,7 @@ const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 const Navbar = ({change, setChange}) => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
+    // const socket= getSocketInstance();
     const {profileInfo, dispatch} = useProfileContext()
     const navigate = useNavigate()
     const userLocal = localStorage.getItem('user')
@@ -38,7 +39,7 @@ const Navbar = ({change, setChange}) => {
     const fetchProfile = () => {
       const getProfile = async () => {
         console.log("fetched profile")
-
+        
         const email = user.email
         console.log(email)
         const encodedEmail = encodeURIComponent(email);
@@ -138,6 +139,10 @@ const Navbar = ({change, setChange}) => {
         <Link to="/signup" className = "px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200"> Signup</Link>
         </div>
           )}
+          
+         {user && (<div>
+          <Link to="/friends" className = "mx-3 px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200" >Friends</Link>
+          </div>)}
         </nav>
       </div>
     </header>
