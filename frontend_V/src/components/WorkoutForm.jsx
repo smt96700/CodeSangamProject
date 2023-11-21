@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { MenuItem } from "@mui/material"
+import { useTheme } from '@mui/material/styles';
 
 import Select from '@mui/material/Select';
 
@@ -16,11 +17,15 @@ const WorkoutForm = () => {
   const [payee, setPayee] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-  const [message, setMessage]= useState();
-  const [amount, setAmount]= useState();
+  const [message, setMessage]= useState('');
+  const [amount, setAmount]= useState(undefined);
   const [isRecurring, setIsRecurring] = useState('No')
   const [isDisabled, setIsDisabled] = useState(true)
   const [recurringTime, setRecurringTime] = useState('')
+
+   //conditional styling for light, dark mode
+   const theme = useTheme();
+   const isDarkMode = theme.palette.mode === 'dark';
   
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -52,10 +57,10 @@ const WorkoutForm = () => {
       setMethod('')
       setStatus('')
       setPayee('')
-      setMessage()
+      setMessage('')
       setError(null)
       setEmptyFields([])
-      setAmount()
+      setAmount(undefined)
       setIsRecurring('No')
       setRecurringTime('')
       console.log('new workout added', json)
@@ -69,13 +74,12 @@ const WorkoutForm = () => {
 
         <label className="me-4 font-light">Expense Category :</label>
           <Select
-            className = "w-1/2"
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             size="small"
             onChange={(e) => setCategory(e.target.value)}
             value={category}
-            class={emptyFields.includes('category') ? 'error' : ''}
+            className={`w-1/2 ${emptyFields.includes('category') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800' : 'bg-white'}`}
           >
             <MenuItem value="Meals/ Entertainment">Meals/ Entertainment</MenuItem>
             <MenuItem value="Travel">Travel</MenuItem>
@@ -91,11 +95,10 @@ const WorkoutForm = () => {
         <br/><br/>
         
         <input 
-        className="w-1/2"
+        className={`${emptyFields.includes('description') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800 text-white' : 'bg-white'}`}
         type="text"
         onChange={(e)=> setDescription(e.target.value)}
         value={description}
-        class={emptyFields.includes('description') ? 'error' : ''}
         placeholder="Description"
       />
         <br/><br/>
@@ -103,13 +106,12 @@ const WorkoutForm = () => {
 
       <label className = "me-4 font-light">Payment Method :</label>
           <Select
-            className = "w-1/5"
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             size="small"
             onChange={(e) => setMethod(e.target.value)}
             value={method}
-            class={emptyFields.includes('method') ? 'error' : ''}
+            className={`w-1/5 ${emptyFields.includes('method') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800' : 'bg-white'}`}
 
           >
             <MenuItem value="Cash">Cash</MenuItem>
@@ -121,13 +123,12 @@ const WorkoutForm = () => {
 
         <label className = "me-4 font-light" style={{marginLeft: "40px"}}>Payment Status :</label>
           <Select
-            className = "w-1/5"
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             size="small"
             onChange={(e) => setStatus(e.target.value)}
             value={status}
-            class={emptyFields.includes('status') ? 'error' : ''}
+            className={`w-1/5 ${emptyFields.includes('status') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800' : 'bg-white'}`}
 
           >
             <MenuItem value="Paid">Paid</MenuItem>
@@ -138,28 +139,29 @@ const WorkoutForm = () => {
        <input 
         type="number"
         onChange={(e) => setAmount(e.target.value)}
-        value={amount}
+        value={amount !== undefined ? amount : ''}
         placeholder="Amount"
+        className = {`${isDarkMode? 'bg-neutral-800  text-white' : 'bg-white'}`}
       />
 
       <input 
         type="String"
         onChange={(e) => setPayee(e.target.value)}
         value={payee}
-        className={emptyFields.includes('payee') ? 'error' : ''}
+        className={`${emptyFields.includes('payee') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800  text-white' : 'bg-white'}`}
         placeholder="Payee"
       />
       <input 
         type="text"
         onChange={(e) => setMessage(e.target.value)}
         value={message}
-        className=''
+        className={`${isDarkMode? 'bg-neutral-800  text-white' : 'bg-white'}`}
         placeholder="Message"
       />
 
 <label className = "me-4 font-light">Recurring Expense :</label>
           <Select
-            className = "w-1/6"
+            className = {`w-1/6 ${isDarkMode? 'bg-neutral-800' : 'bg-white'}`}
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             size="small"
@@ -186,7 +188,7 @@ const WorkoutForm = () => {
               onBlur={(e) => (e.target.type = "text")}
               value = {recurringTime}
               onChange={(e) => setRecurringTime(e.target.value)}
-              className={emptyFields.includes('recurringTime') ? 'error' : ''}
+              className={`${emptyFields.includes('recurringTime') ? 'error' : ''} ${isDarkMode? 'bg-neutral-800  text-white' : 'bg-white'}`}
             >
             </input>
             <p className = "font-extralight text-sm" style = {{marginTop : "-15px"}}>Pick next Scheduled pay</p>

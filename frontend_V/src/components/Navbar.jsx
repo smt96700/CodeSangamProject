@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 import {useLogout} from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useProfileContext } from '../hooks/useProfileContext';
@@ -6,16 +7,29 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Person2Icon from '@mui/icons-material/Person2';
 import WorkoutForm from './WorkoutForm';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import Switch from '@mui/material/Switch';
+import { useTheme } from '@mui/material/styles';
 
-const Navbar = () => {
+
+
+const label = { inputProps: { 'aria-label': 'Color switch demo' } };
+
+
+const Navbar = ({change, setChange}) => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
     const {profileInfo, dispatch} = useProfileContext()
     const navigate = useNavigate()
+    const userLocal = localStorage.getItem('user')
+
+    //conditional styling for light, dark mode
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
     
     const handleClick=()=>{
         logout();
@@ -60,17 +74,32 @@ const Navbar = () => {
       </Box>
     )
 
+    //state for light mode/ dark mode
+    const [mode, setMode] = useState('Light Mode')
+    useEffect(() => {
+      if (change) {
+        setMode('Dark Mode');
+      }
+      else {
+        setMode('Light Mode')
+      }
+    }, [change]);
+    
   return (
-    <header>
+    <header className={` header ${isDarkMode ? 'dark:bg-zinc-700' : 'bg-white'}`}>
       <div className="container">
 
         <Link to="/home">
           <div className = "flex">
-            <span className="material-symbols-outlined text-4xl m-3">account_balance</span>
-            <h1>Expense Buddy</h1>
+            {/* <span className="material-symbols-outlined text-4xl m-3 ">account_balance</span> */}
+            <span className = {`text-4xl m-3 ${isDarkMode? 'text-white' : 'text-black'}`}><AccountBalanceIcon/></span>
+            <h1 className={` ${isDarkMode ? 'dark:text-white' : 'text-black'}`}>Expense Buddy</h1>
           </div>
         </Link>
         <nav>
+          <Switch {...label}  onChange = {setChange} checked = {change}/>
+          <p className={`font-serif mr-3 ${isDarkMode ? 'dark:text-white' : 'text-black'}`}>{mode}</p>
+
           {user && user.isFilledUserProfile &&( 
               <div className='flex'>
                 <div className='mx-4'>

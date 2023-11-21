@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
     "@mui/x-date-pickers": "^6.18.1",
     "apexcharts": "^3.44.0",
+    "framer-motion": "^10.16.5",
     "moment-timezone": "^0.5.43",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",

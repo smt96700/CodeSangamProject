@@ -1,7 +1,15 @@
 import {React} from 'react'
 import Chart from "react-apexcharts"
+import { useTheme } from '@mui/material/styles';
+
 
 function ChartOnCategory({workouts}) {
+
+    //conditional styling for light, dark mode
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
+
+    //arr to store freq of each category
     const freq = [0,0,0,0,0,0,0,0,0,0]
 
     workouts.forEach((workout) => {
@@ -28,9 +36,10 @@ function ChartOnCategory({workouts}) {
                 {freq[9]++;}
     })
 
+    
+
     return (
         <>
-            
             <Chart
                 type = "donut"
                 width = {520}
@@ -39,12 +48,23 @@ function ChartOnCategory({workouts}) {
 
                 options = {
                     {
-                        labels: ['Meals/ Entertainment', 'Travel', 'Electricity Bill', 'Water Bill', 'LPG Gas', 'Internet and Phone Bills', 'Electronic Equipments', 'Training/ Education', 'Grocery', 'Clothing']
+                        
+                        theme : {
+                            mode : isDarkMode? 'dark' : 'light',
+                        },
+                        
+                        labels: ['Meals/ Entertainment', 'Travel', 'Electricity Bill', 'Water Bill', 'LPG Gas', 'Internet and Phone Bills', 'Electronic Equipments', 'Training/ Education', 'Grocery', 'Clothing'],
+                        options: {
+                            labels: {
+                              style: {
+                                colors: ['#ffffff', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff','#ff0000'], // Set your desired label text colors
+                              },
+                            },
+                          },
                     }
                 }
             >
             </Chart>
-            
         </>
     )
 }
