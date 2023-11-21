@@ -3,15 +3,23 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const workoutSchema = new Schema({
-  title: {
+  category: {
     type: String,
     required: true
+  },
+  description: {
+    type : String,
+    required : true
   },
   payee: {
     type: String,
     required: true
   },
   method: {
+    type: String,
+    required: true
+  },
+  status: {
     type: String,
     required: true
   },
@@ -25,6 +33,13 @@ const workoutSchema = new Schema({
   },
   amount:{
     type: Number
+  },
+  isRecurring: {
+    type : String
+  },
+  recurringTime: {
+    type: Date,
+    default : null
   }
 }, { timestamps: true })
 

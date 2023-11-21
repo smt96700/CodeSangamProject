@@ -1,7 +1,8 @@
-
 import { useState } from "react";
 import {useLogin} from "../hooks/useLogin"
 import TextField from '@mui/material/TextField';
+import { useTheme } from '@mui/material/styles';
+
 
 function Login(){
     const [email, setEmail]= useState('');
@@ -11,8 +12,12 @@ function Login(){
          e.preventDefault();
          await login(email, password);
     }
+    //conditional styling for light, dark mode
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
+
     return(
-        <form className="login" onSubmit={handleSubmit}> 
+        <form className={`login ${isDarkMode ? 'bg-zinc-700' : 'bg-white'}`} onSubmit={handleSubmit}> 
             <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light">Login</h1>
 
             <TextField 

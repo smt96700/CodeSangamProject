@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import { useTheme } from '@mui/material/styles';
 
 function UserProfileForm() {
   const [name, setName] = useState("");
@@ -23,6 +24,11 @@ function UserProfileForm() {
   const email = user ? user.email : '';
   const { dispatch } = useAuthContext();
   const navigate= useNavigate();
+
+  //conditional styling for light, dark mode
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+
   //including dispatch fun
   // const {dispatch} = useProfileContext()
 
@@ -93,15 +99,15 @@ function UserProfileForm() {
 
   return (
     <>
-      <form className="create_profile" onSubmit={handleSubmit}>
+      <form className={`create_profile ${isDarkMode? 'bg-zinc-700' : 'bg-white'}`} onSubmit={handleSubmit}>
       <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light font-serif">Let Us know about you...</h1>
-
+        
         <label>Name:</label>
         <input
           type="text"
           onChange={(e) => setName(e.target.value)}
           value={name}
-          className={emptyFields.includes("name") ? "error" : ""}
+          className={`${emptyFields.includes("name") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>Date of Birth:</label>
@@ -109,23 +115,20 @@ function UserProfileForm() {
           type="date"
           onChange={(e) => setDateOfBirth(e.target.value)}
           value={dateOfBirth}
-          className={emptyFields.includes("dateOfBirth") ? "error" : ""}
+          className={`${emptyFields.includes("dateOfBirth") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <br/>
-        <InputLabel id="demo-simple-select-helper-label">Gender</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">Gender:</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
-          label="Gender"
           size = "small"
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className={emptyFields.includes("gender") ? "error" : ""}
+          className={`${emptyFields.includes("gender") ? "error" : ""} ${isDarkMode? 'bg-zinc-600' : 'bg-white'}`}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+          
           <MenuItem value="male">Male</MenuItem>
           <MenuItem value="female">Female</MenuItem>
           <MenuItem value="other">Other</MenuItem>
@@ -137,7 +140,7 @@ function UserProfileForm() {
           type="text"
           onChange={(e) => setContactNumber(e.target.value)}
           value={contactNumber}
-          className={emptyFields.includes("contactNumber") ? "error" : ""}
+          className={`${emptyFields.includes("contactNumber") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>Currency:</label>
@@ -145,7 +148,7 @@ function UserProfileForm() {
           type="text"
           onChange={(e) => setCurrency(e.target.value)}
           value={currency}
-          className={emptyFields.includes("currency") ? "error" : ""}
+          className={`${emptyFields.includes("currency") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>Monthly Salary:</label>
@@ -153,7 +156,7 @@ function UserProfileForm() {
           type="number"
           onChange={(e) => setMonthlySalary(e.target.value)}
           value={monthlySalary}
-          className={emptyFields.includes("monthlySalary") ? "error" : ""}
+          className={`${emptyFields.includes("monthlySalary") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>Expected Monthly Expense:</label>
@@ -161,7 +164,7 @@ function UserProfileForm() {
           type="number"
           onChange={(e) => setMonthlyExpense(e.target.value)}
           value={monthlyExpense}
-          className={emptyFields.includes("monthlyExpense") ? "error" : ""}
+          className={`${emptyFields.includes("monthlyExpense") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>Country:</label>
@@ -169,7 +172,7 @@ function UserProfileForm() {
           type="text"
           onChange={(e) => setCountry(e.target.value)}
           value={country}
-          className={emptyFields.includes("country") ? "error" : ""}
+          className={`${emptyFields.includes("country") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>State:</label>
@@ -177,7 +180,7 @@ function UserProfileForm() {
           type="text"
           onChange={(e) => setState(e.target.value)}
           value={state}
-          className={emptyFields.includes("state") ? "error" : ""}
+          className={`${emptyFields.includes("state") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}
         />
 
         <label>City:</label>
@@ -185,11 +188,11 @@ function UserProfileForm() {
           type="text"
           onChange={(e) => setCity(e.target.value)}
           value={city}
-          className={emptyFields.includes("city") ? "error" : ""}
-        />
+          className = {`${emptyFields.includes("city") ? "error" : ""} ${isDarkMode? 'bg-zinc-600 text-white' : 'bg-white'}`}        />
 
-        <button>Add Profile</button>
         {error && <div className="error">{error}</div>}
+        <button className="mt-5">Add Profile</button>
+        
       </form>
     </>
   );

@@ -60,6 +60,7 @@ const createProfile = async function (req, res) {
   // add doc to db
   try {
     // const user_id = req.user._id;
+    
     const profile = await Profile.create({
         name,
         gender,
@@ -74,6 +75,7 @@ const createProfile = async function (req, res) {
         email
     });
     const user= await User.findOneAndUpdate({email: email}, { $set: { isFilledUserProfile: true } });
+    console.log(profile)
     res.status(200).json(profile);
     
   } catch (error) {
@@ -82,4 +84,11 @@ const createProfile = async function (req, res) {
 
 };
 
-module.exports= {createProfile};
+const getProfile = async (req, res) => { 
+  console.log(req.query.email)
+  const profileInfo = await Profile.findOne({email : req.query.email})
+  console.log(profileInfo)
+  res.status(200).json(profileInfo)
+}
+
+module.exports= {createProfile, getProfile};
