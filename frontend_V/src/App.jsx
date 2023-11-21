@@ -14,8 +14,8 @@ import Friends from './components/Friends'
 
 function App() {
   const {user} = useAuthContext();
-  const userLocal= localStorage.getItem('user');
-   const parsedUserLocal=  userLocal ? JSON.parse(userLocal) : userLocal;
+  // const userLocal= localStorage.getItem('user');
+  //  const parsedUserLocal=  userLocal ? JSON.parse(userLocal) : userLocal;
   
   // console.log("inside app userLocal", userLocal.isFilledUserProfile);
   const {isFilledUserProfile} = useProfileContext();
@@ -50,7 +50,7 @@ function App() {
               path= "/userProfile"
               element = {<UserProfile/>}
             />
-           <Route path= '/friends' element= {(user || parsedUserLocal) ? <Friends /> : <Navigate to = '/home' />}
+           <Route path= '/friends' element= {(user) ? <Friends /> : <Navigate to = '/home' />}
            />
             <Route 
               path = "/profile"

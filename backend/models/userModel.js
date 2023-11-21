@@ -25,12 +25,34 @@ const userSchema= new Schema({
         connected: {
             type: Boolean,
             default: false
+        },
+        userid: {
+            type: String
         }
     }],
     connected: {
         type: Boolean,
         default: false
-    }
+    },
+    messages: [{
+           from: {
+            type: String
+           },
+           to: {
+            type: String
+           },
+           content: {
+            type: String
+           },
+           createdAt: {
+            type: Date,
+            default: Date.now,
+          },
+          updatedAt: {
+            type: Date,
+            default: Date.now,
+          }
+    }]
 }, {timestamps:true});
 
 //signup static model like User.save()

@@ -27,6 +27,7 @@ const getFriends = async (req, res) => {
  
        // If the friend user is found, update the connected value
        if (friendUser) {
+        friends[i].username= friendUser.email;
          friends[i].connected = friendUser.connected;
        }
        // If the friend user is not found, you might want to handle this case accordingly

@@ -57,7 +57,8 @@ const workoutRoutes = require("./routes/workouts");
 const userRoutes = require("./routes/user");
 const profileRoutes = require("./routes/profile");
 const friendsRoutes= require("./routes/friends");
-const { addFriend } = require("./controllers/socketController");
+const messagesRoutes= require("./routes/messages");
+const { addFriend, dm, initializeUser, onDisconnect } = require("./controllers/socketController");
 const cors = require("cors");
 // const http = require('http')
 const { Server } = require("socket.io");
@@ -79,8 +80,10 @@ app.use("/api/workouts", workoutRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/friends", friendsRoutes);
+app.use("/api/messages", messagesRoutes);
 
 // connect to db
+const userSocketMap = new Map(); // Map to store user ID to socket ID mapping
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -107,8 +110,19 @@ mongoose
       // Attach userid and username to the socket object
       socket.userid = userid;
       socket.username = username;
+
+      //initialise user
+      initializeUser(userSocketMap,socket);
+       // Add the user ID and socket ID to the mapping
+         userSocketMap.set(userid, socket.id);
       socket.on("add_friend", (friendName, cb)=>{
            addFriend(socket, friendName, cb);
+      });
+      socket.on("disconnecting", ()=> onDisconnect(userSocketMap, socket))
+      socket.on("dm", (message)=> dm(io, userSocketMap, socket, message))
+      socket.on('disconnect', () => {
+        // Remove the user ID and socket ID from the mapping when a socket disconnects
+        userSocketMap.delete(userid);
       });
     });
   })

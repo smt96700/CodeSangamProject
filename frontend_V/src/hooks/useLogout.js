@@ -1,4 +1,4 @@
-import socket from '../socket';
+// import getSocketInstance from '../socket';
 import {useAuthContext} from './useAuthContext'
 import {useWorkoutsContext} from './useWorkoutsContext'
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ export const useLogout= ()=>{
       const email= user && user.email;
       const navigate= useNavigate();
       const {dispatch:workoutDispatch}= useWorkoutsContext(); //to use dispatch as other reference name
+    //   const socket= getSocketInstance();
     const logout= async ()=>{
         //remove user from local stroage
         localStorage.removeItem('user');
@@ -32,7 +33,7 @@ export const useLogout= ()=>{
                 // Handle the error, e.g., show a message to the user
                 throw new Error('Failed to update connected field on the server');
             }
-    
+            // socket.emit("disconnecting", {});
             // Navigate to the login page
             navigate('/login');
         } catch (error) {

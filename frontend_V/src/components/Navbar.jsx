@@ -10,15 +10,16 @@ import Person2Icon from '@mui/icons-material/Person2';
 import WorkoutForm from './WorkoutForm';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import socket from '.././socket'
+// import getSocketInstance from '../socket';
 const Navbar = () => {
     const {logout}= useLogout();
     const {user}= useAuthContext();
+    // const socket= getSocketInstance();
     const {profileInfo, dispatch} = useProfileContext()
     const navigate = useNavigate()
     
     const handleClick=()=>{
-        logout(socket);
+        logout();
     }
 
     const fetchProfile = () => {
