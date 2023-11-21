@@ -1,4 +1,4 @@
-
+import { useTheme } from '@mui/material/styles';
 import { useState } from "react";
 import { useSignup } from "../hooks/userSignup";
 import TextField from '@mui/material/TextField';
@@ -14,8 +14,13 @@ const Signup=()=>{
         //  console.log(email, password);
         await signup(email, password);
     }
+
+    //conditional styling for light, dark mode
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
+
     return(
-        <form className="signup" onSubmit={handleSubmit}> 
+        <form className={`signup ${isDarkMode ? 'dark:bg-zinc-700' : 'bg-white'}`} onSubmit={handleSubmit}> 
             <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light">SignUp</h1>
 
             <TextField 
