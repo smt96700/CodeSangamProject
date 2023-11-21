@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import GroupIcon from '@mui/icons-material/Group';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Person2Icon from '@mui/icons-material/Person2';
 import WorkoutForm from './WorkoutForm';
@@ -103,7 +104,7 @@ const Navbar = ({change, setChange}) => {
 
           {user && user.isFilledUserProfile &&( 
               <div className='flex'>
-                <div className='mx-4'>
+                <div className='mx-2'>
                   {['top'].map((anchor) => (
                     <React.Fragment key={anchor}>
                       <Button variant="contained" onClick={toggleDrawer(anchor, true)}>Add Expense</Button>
@@ -121,7 +122,7 @@ const Navbar = ({change, setChange}) => {
                   ))}
                 </div>
 
-                <div className='mx-1'>
+                <div className='mx-2'>
                   <Button onClick={fetchProfile} variant="contained" endIcon={<Person2Icon />}> profile </Button>
                 </div>
               </div>
@@ -140,8 +141,12 @@ const Navbar = ({change, setChange}) => {
         </div>
           )}
           
-         {user && (<div>
-          <Link to="/friends" className = "mx-3 px-4 py-2 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200" >Friends</Link>
+         {user && (
+         <div className='mx-2'>
+          {/* <Link to="/friends" className = "mx-3 px-4 py-3 text-blue-100 no-underline bg-blue-600 rounded hover:bg-blue-700  hover:text-blue-200" >FRIENDS</Link> */}
+          
+          <Button onClick={() => navigate('/friends')} variant="contained" endIcon={<GroupIcon />}>FRIENDS</Button>
+
           </div>)}
         </nav>
       </div>
