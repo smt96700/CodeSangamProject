@@ -62,7 +62,7 @@ const UseSocketSetup = (setFriendList, setMessages) => {
       socket.off("connect_error");
       socket.off("messages");
       socket.off("dm");
-   
+      socket.off("connected")
     };
   }, [setFriendList, setMessages]);
 };
