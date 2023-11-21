@@ -56,7 +56,7 @@ const Friends= ()=>{
         </GridItem>
         <GridItem colSpan="7" maxH="100vh">
           <MessageContext.Provider value ={{messages, setMessages}}>
-            <Chat  userid={friendList.length >0 && friendList[friendIndex].userid} />
+            <Chat  userid={friendList.length > 0 && friendList[friendIndex] && friendList[friendIndex].userid} />
           </MessageContext.Provider>
         </GridItem>
       </Grid>

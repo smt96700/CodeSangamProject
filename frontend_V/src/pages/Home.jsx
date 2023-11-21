@@ -16,7 +16,7 @@ import ChartOnCategory from '../charts/pieChart/ChartOnCategory'
 
 //authContext
 import { useAuthContext } from '../hooks/useAuthContext'
-
+import CurrencyConverter from '../components/CurrencyConverter'
 const Home = () => {
   // states for the notification bar
   const [open, setOpen] = React.useState(false);
@@ -185,12 +185,15 @@ const Home = () => {
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
-      
+      <div>
       {workouts && 
         <ChartOnCategory workouts = {workouts}/>
       }
-    </div>
+      <CurrencyConverter />
+      </div>
 
+    </div>
+     
     </>
   )
 }

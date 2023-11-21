@@ -3,7 +3,7 @@ import TextField from './TextField'
 import { Formik, Form } from "formik";
 import getSocketInstance from ".././socket";
 import { useCallback, useContext, useState } from "react";
-import { FriendContext } from "./Friends";
+import { FriendContext} from "./Friends";
 const AddFriendModal= ({isOpen, onClose})=>{
     const [error, setError]= useState("");
     const {setFriendList}= useContext(FriendContext);
@@ -25,6 +25,7 @@ const AddFriendModal= ({isOpen, onClose})=>{
             socket.emit("add_friend", values.friendName, ({errorMsg, done, newFriend})=>{
                 if(done){
                     setFriendList(prev => [newFriend, ...prev] );
+                    setMessage(prev => [...prev]);
                     closeModal();
                     return;
                 }
