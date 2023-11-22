@@ -96,7 +96,7 @@ mongoose
     // create Socket.IO instance
     const io = new Server(server, {
       cors: {
-        origin: "https://deploy-demo-kappa-two.vercel.app",
+        origin: "https://deploy-demo-coral.vercel.app",
         methods: ["GET", "POST"],
         credentials: true,
       },
