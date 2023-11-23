@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily : {
         'Agbalumo' : ['Agbalumo'],
+        'Poppins' : ['Poppins'],
       },
     },
   },

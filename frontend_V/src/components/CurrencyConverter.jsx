@@ -1,57 +1,9 @@
-// import { useState } from 'react'
-// // import reactLogo from './assets/react.svg'
-// // import viteLogo from '/vite.svg'
-// // import './App.css'
-// import UseCurrencyInfo from "../hooks/UseCurrencyInfo"
-// import InputBox  from "./InputBox"
-// function CurrencyConverter() {
-//   const [amount, setAmount]= useState(0);
-//   const [from, setFrom]= useState('usd');
-//   const [to, setTo]= useState('inr');
-//   const [convertedAmount, setConvertedAmount ]= useState(0);
-  
-//   const currencyInfo= UseCurrencyInfo(from);
-//   const options= Object.keys(currencyInfo);
-//   const swap= ()=>{
-//     setFrom(to);
-//     setTo(from);
-//     setAmount(convertedAmount);
-//     setConvertedAmount(amount);
-//     // const convert= ()=>{
-//     //      setConvertedAmount(amount* currencyInfo[to]);
-//     // }
-//   }
-//   return (
-    
-//       <div className='items-center w-full h-screen bg-blue-800   flex flexwrap justify-center'>
-//         <div className='items-center fixed w-full text-white flex flexwrap justify-center'> 
-//          <div className='  flex flex-col  bg-blue-400 p-5 rounded-lg font-semibold justify-center'> 
-//            <div className='flex flex-col relative '>
-//            <InputBox label="From" amount={amount} currOptions={options} 
-//            onCurrencyChange={(currency)=> setFrom(currency)} selectCurrency={from} onAmountChange={(amount)=> setAmount(amount)}/>
-//            <div className='bg-blue-600 absolute top-1/3 p-1 mt-3 rounded-lg  left-1/3 translate-x-1/2  m-0 flex flexwrap justify-center'>
-//             <button className='h-8 w-full' onClick={()=> swap()}>Swap</button>
-//            </div>
-//            <InputBox label="To" amount={convertedAmount} 
-//            onAmountChange={(convertedAmount)=> setConvertedAmount(convertedAmount)} onCurrencyChange={(currency)=> setTo(currency)} selectCurrency={to} currOptions={options} amountDisable />
-//            </div>
-//            <div className='bg-blue-600 rounded-lg m-2 h-16 items-center flex '>
-//            <button className='w-full h-full' onClick={()=> setConvertedAmount(amount* currencyInfo[to])}>Convert {from.toUpperCase()} To {to.toUpperCase()}</button>
-//            </div>
-//          </div>
-
-//         </div>
-
-//       </div>
-    
-//   )
-// }
-
-// export default CurrencyConverter;
 
 import { useState } from 'react';
 import UseCurrencyInfo from '../hooks/UseCurrencyInfo';
 import InputBox from './InputBox';
+import { useTheme } from '@mui/material/styles';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 function CurrencyConverter() {
   const [amount, setAmount] = useState(0);
@@ -62,6 +14,10 @@ function CurrencyConverter() {
   const currencyInfo = UseCurrencyInfo(from);
   const options = Object.keys(currencyInfo);
 
+  //conditional styling for light, dark mode
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+
   const swap = () => {
     setFrom(to);
     setTo(from);
@@ -71,7 +27,7 @@ function CurrencyConverter() {
 
   return (
     <div className='flex items-center justify-center h-screen'>
-      <div className='bg-gray-200 p-6 rounded-lg shadow-md'>
+      <div className={`p-6 rounded-lg shadow-md ${isDarkMode? 'bg-zinc-700' : 'bg-gray-200'}`}>
         <div className='flex flex-col'>
           <InputBox
             label='From'
@@ -82,10 +38,11 @@ function CurrencyConverter() {
             onAmountChange={(amount) => setAmount(amount)}
           />
           <div className='mt-3 flex justify-center'>
-            <button className='bg-blue-500 text-white px-4 py-2 rounded-md' onClick={() => swap()}>
-              Swap
+            <button className= {`${isDarkMode? 'bg-blue-300 text-zinc-800' : 'bg-blue-500 text-white'} px-4 py-2 rounded-md`} style = {{marginTop:'-28px', marginBottom : '-15px',zIndex : '1'}} onClick={() => swap()}>
+              Swap <SwapVertIcon/>
             </button>
           </div>
+          
           <InputBox
             label='To'
             amount={convertedAmount}
@@ -94,10 +51,11 @@ function CurrencyConverter() {
             selectCurrency={to}
             currOptions={options}
             amountDisable
+            
           />
           <div className='mt-3 flex justify-center'>
             <button
-              className='bg-blue-500 text-white px-4 py-2 rounded-md'
+              className={` px-4 py-2 rounded-md ${isDarkMode? 'bg-blue-300 text-zinc-800' : 'bg-blue-500 text-white'}`}
               onClick={() => setConvertedAmount(amount * currencyInfo[to])}
             >
               Convert {from.toUpperCase()} To {to.toUpperCase()}

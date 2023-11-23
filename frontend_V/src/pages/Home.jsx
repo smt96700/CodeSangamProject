@@ -9,6 +9,7 @@ import Slide from '@mui/material/Slide';
 
 import { useEffect, useState }from 'react'
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import moment from 'moment-timezone';
 
 // components
 import WorkoutDetails from '../components/WorkoutDetails'
@@ -26,6 +27,7 @@ const Home = () => {
   };
 
   const handleClose = () => {
+    setUserResponded(true)
     setOpen(false);
   };
 
@@ -55,12 +57,20 @@ const Home = () => {
       let intervalCounter = 0;
       if (giveNotification()) {
         const intervalId = setInterval(() => {
-          notifyUser("Pay kar") 
+          const currentDate = new Date();
+          const dueDate = new Intl.DateTimeFormat('en-US', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric', 
+            
+          }).format(currentDate);
+          
+          notifyUser(`Pay the Bill dated ${dueDate}`) 
           // Increment the counter
           intervalCounter++;
 
           // Check if the counter has reached the limit
-          if (intervalCounter >= 1) {
+          if (intervalCounter >= 0) {
             clearInterval(intervalId);
           }
         }, 5000)
@@ -144,17 +154,16 @@ const Home = () => {
     <>
     <div className = "flex flex-wrap justify-end">
     {(!(userResponded) && !(Notification.permission === 'granted')) ? (
-        <React.Fragment>
+        <>
         <Button variant="outlined" onClick={handleClickOpen}>
           Allow Notification
         </Button>
         <Dialog
-          open={open}
+          open= {open}
           TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
+        
           <DialogTitle>{"Notifications?"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
@@ -167,7 +176,7 @@ const Home = () => {
             <Button onClick={disableNotificationAndClose}>No Thanks</Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </>
 
 
   ) : (Notification.permission === 'granted' && workouts) ? (
