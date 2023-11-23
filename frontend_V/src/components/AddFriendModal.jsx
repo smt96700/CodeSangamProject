@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import getSocketInstance from ".././socket";
 import { useCallback, useContext, useState } from "react";
 import { FriendContext} from "./Friends";
+import { useTheme } from "@mui/material/styles";
 const AddFriendModal= ({isOpen, onClose})=>{
     const [error, setError]= useState("");
     const {setFriendList}= useContext(FriendContext);
@@ -12,11 +13,14 @@ const AddFriendModal= ({isOpen, onClose})=>{
          setError("");
          onClose();
     }, [onClose])
+    const theme= useTheme();
+    const isDarkMode= theme.palette.mode === 'dark';
+
     return (
         // onclicking the background the the popup disappears
     <Modal isOpen={isOpen} onClose={closeModal} isCentered>
       <ModalOverlay />   
-      <ModalContent>
+      <ModalContent  backgroundColor= {isDarkMode ? "black": "white"} >
         <ModalHeader>Add a friend!</ModalHeader>
         <ModalCloseButton />
         <Formik
@@ -38,9 +42,11 @@ const AddFriendModal= ({isOpen, onClose})=>{
         <ModalBody>
             <TextField
             label="Friend's name"
-            placehoder= "Enter friend's username.."
+            placeholder= "Enter friend's username.."
             autoComplete= "off"
-            name= "friendName" 
+            name= "friendName"
+            _placeholder= {{color: isDarkMode ? "white" : "black"}} 
+            color= {isDarkMode ? "white": "black"}
             />
           
         </ModalBody>
