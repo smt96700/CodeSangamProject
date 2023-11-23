@@ -200,7 +200,6 @@ const Home = () => {
       }
       <CurrencyConverter />
       </div>
-
     </div>
      
     </>

@@ -63,6 +63,7 @@ const cors = require("cors");
 // const http = require('http')
 const { Server } = require("socket.io");
 
+
 // express app
 const app = express();
 app.use(cors());
@@ -95,7 +96,7 @@ mongoose
     // create Socket.IO instance
     const io = new Server(server, {
       cors: {
-        origin: "http://localhost:5173",
+        origin: "https://deploy-demo-coral.vercel.app",
         methods: ["GET", "POST"],
         credentials: true,
       },

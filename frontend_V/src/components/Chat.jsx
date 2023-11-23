@@ -12,42 +12,82 @@ const Chat= ({userid})=>{
         bottomDiv.current?.scrollIntoView();
     })
     return friendList.length >0 ? (
-        <VStack h="100%" justify= "end">
-            <TabPanels overflowY="scroll">
-              {friendList.map(friend => (
-                 <VStack
-                 flexDir= "column-reverse"
-                 as= {TabPanel}
-                 key= {`chat: ${friend.username}`}
-                 w="100%"
-                 >
-                    <div ref= {bottomDiv}/>
-                    {messages.filter(
-                        msg => msg.to === friend.userid || msg.from === friend.userid
-                    )
-                    .map((message, idx) => (
-                        <Text 
-                         m= {
-                            message.to === friend.userid
-                            ? "1rem 0 0 auto !important"
-                            : "1rem auto 0 0 !important"
-                         }
-                        key = {`msg: ${friend.username}.${idx}`} fontSize="lg"
-                          bg= {message.to === friend.userid ? "blue.200" : "green.200"}
-                          color= "gray.800"
-                          borderRadius= "gray.800"
-                          p= "0.5rem 1rem"
-                          maxW= "50%"
-                        >
-                            {message.content}
-                        </Text>
-                    ))}
-                 </VStack>
-              ))}   
+        // <VStack h="100%" justify= "end">
+        //     <TabPanels overflowY="scroll">
+        //       {friendList.map(friend => (
+        //          <VStack
+        //          flexDir= "column-reverse"
+        //          as= {TabPanel}
+        //          key= {`chat: ${friend.username}`}
+        //          w="100%"
+        //          >
+        //             <div ref= {bottomDiv}/>
+        //             {messages.filter(
+        //                 msg => msg.to === friend.userid || msg.from === friend.userid
+        //             )
+        //             .map((message, idx) => (
+        //                 <Text 
+        //                  m= {
+        //                     message.to === friend.userid
+        //                     ? "1rem 0 0 auto !important"
+        //                     : "1rem auto 0 0 !important"
+        //                  }
+        //                 key = {`msg: ${friend.username}.${idx}`} fontSize="lg"
+        //                   bg= {message.to === friend.userid ? "blue.200" : "green.200"}
+        //                   color= "gray.800"
+        //                   borderRadius= "gray.800"
+        //                   p= "0.5rem 1rem"
+        //                   maxW= "50%"
+        //                 >
+        //                     {message.content}
+        //                 </Text>
+        //             ))}
+        //          </VStack>
+        //       ))}   
             
-            </TabPanels>
-            <ChatBox userid= {userid}/>
-        </VStack>
+        //     </TabPanels>
+        //     <ChatBox userid= {userid}/>
+        // </VStack>
+        <VStack height="100%" justifyContent="end">
+        <TabPanels overflowY="scroll">
+          {friendList.map((friend) => (
+            <VStack
+              key={`chat:${friend.username}`}
+              flexDir="column-reverse"
+              w="100%"
+              as={TabPanel}
+            >
+              <div ref={bottomDiv} />
+
+              {messages
+                .filter(
+                  (msg) =>
+                    msg.to === friend.userid || msg.from === friend.userid
+                )
+                .map((message, idx) => (
+                  <Text
+                    key={`msg:${friend.username}.${idx}`}
+                    fontSize="lg"
+                    p="0.5rem 1rem"
+                    maxW="50%"
+                    borderRadius="lg"
+                    mb="2"
+                    ml="2"
+                    mr="2"
+                    color="white"
+                    bg={message.to === friend.userid ? 'blue.500' : 'green.500'}
+                    alignSelf={
+                      message.to === friend.userid ? 'flex-end' : 'flex-start'
+                    }
+                  >
+                    {message.content}
+                  </Text>
+                ))}
+            </VStack>
+          ))}
+        </TabPanels>
+        <ChatBox userid={userid} />
+      </VStack>
     ):
     ( 
     <VStack justify= "center"  pt= "5rem" w="100%" textAlign="center" fontSize="large">

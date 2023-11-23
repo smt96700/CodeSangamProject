@@ -58,60 +58,60 @@
 
 // export default ChakraWrapper;
 
+
+// actual function
 // ChakraWrapper.js
-import React, { useState, useEffect } from 'react';
-import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
-import { createTheme } from '@mui/material/styles';
+// import React, { useState, useEffect } from 'react';
+// import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 
 
-const ChakraWrapper = ({ children }) => {
-  // Material-UI themes
-const lightMuiTheme = createTheme({
-  palette: {
-    mode: 'light',
-    // other light mode theme configurations
-  },
-});
 
-const darkMuiTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    // other dark mode theme configurations
-  },
-});
+// const ChakraWrapper = ({ children }) => {
+//   //  console.log("hello",theme.config.initialColorMode);
+//   return (
+//     <ChakraProvider>
+//       <ColorModeScript />
+//       {children}
+//     </ChakraProvider>
+//   );
+// };
 
-const lightChakraTheme = extendTheme({
-    config : {
-      initialColorMode : 'light'
-    }
+// export default ChakraWrapper;
+
+
+import React from 'react';
+import { ChakraProvider, ColorModeScript, extendTheme, useColorMode } from '@chakra-ui/react';
+
+const ChakraWrapperDark = ({ children }) => {
+  const { colorMode} = useColorMode();
+
+  // Set up your custom theme with dark and light modes
+  const theme = extendTheme({
+    config: {
+      initialColorMode: "light",
+      useSystemColorMode: false,
+    },
+    styles: {
+      global: {
+        // Define global styles for both light and dark modes
+        // You can customize these styles according to your needs
+        body: {
+          fontFamily: 'body',
+          bg: colorMode === 'light' ? 'white' : 'gray.800',
+          color: colorMode === 'light' ? 'black' : 'white',
+        },
+      },
+    },
   });
-
-  const darkChakraTheme = extendTheme({
-    config : {
-      initialColorMode : 'dark'
-    }
-  });
-  // State to manage the Chakra UI theme
-  const [chakraTheme, setChakraTheme] = useState(lightChakraTheme);
-
-
-  useEffect(() => {
-    // Access the current mode from Material-UI theme
-    const isDarkMode = lightMuiTheme.palette.mode === 'dark';
-
-    // Set the Chakra UI theme based on the Material-UI theme
-    setChakraTheme(isDarkMode ? darkChakraTheme : lightChakraTheme);
-  }, []);
-
 
   return (
-    <ChakraProvider theme={chakraTheme}>
-      <ColorModeScript initialColorMode={lightMuiTheme.palette.mode} />
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       {children}
     </ChakraProvider>
   );
 };
 
-export default ChakraWrapper;
+export default ChakraWrapperDark;
 
 

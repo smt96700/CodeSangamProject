@@ -1,10 +1,12 @@
 import {Grid, GridItem, Tabs} from '@chakra-ui/react'
-import ChakraWrapper from '../context/ChakraWrapper'
+import ChakraWrapperDark from '../context/ChakraWrapperDark'
+import ChakraWrapperLight from '../context/ChakraWrapperLight'
 import FriendsSidebar from './FriendsSidebar'
 import Chat from './Chat'
 import { createContext, useEffect, useState } from 'react'
 import UseSocketSetup from '../hooks/useSocketSetup'
 import { useAuthContext } from '../hooks/useAuthContext'
+import {useTheme} from '@mui/material/styles'
 // import io from 'socket.io-client'
 
 // const socket= io.connect("http://localhost:4000")
@@ -16,6 +18,9 @@ const Friends= ()=>{
     const {user}= useAuthContext();
     const userid= user && user.userid;
     const [friendIndex, setFriendIndex]= useState(0);
+    const theme= useTheme();
+    const isDarkMode= theme.palette.mode === 'dark';
+    const ChakraWrapper= isDarkMode ? ChakraWrapperDark: ChakraWrapperLight;
     useEffect(()=>{
       const fetchFriends= async ()=>{
         const response = await fetch('http://localhost:4000/api/friends', {
