@@ -17,6 +17,9 @@ import { useTheme } from '@mui/material/styles';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 
+import avatarImage from '../assets/avatar.png';
+
+
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 
@@ -147,8 +150,8 @@ const Navbar = ({ change, setChange }) => {
                 onClick={setChange} checked={change}
                 className="relative rounded-full  p-1 "
               >
-                {isDarkMode ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                {isDarkMode ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                 </svg>
                   : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                     <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
@@ -166,8 +169,8 @@ const Navbar = ({ change, setChange }) => {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="h-10 w-10 rounded-full"
+                        src={avatarImage}
                         alt=""
                       />
                     </Menu.Button>
@@ -184,34 +187,34 @@ const Navbar = ({ change, setChange }) => {
                     <Menu.Items className={`absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isDarkMode ? 'bg-zinc-800' : 'bg-white'}`}>
                       <Menu.Item>
                         {({ active }) => (
-                          <p
-                            onClick={()=> navigate('/profile')}
+                          <Link
+                            to = '/profile'
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Your Profile
-                          </p>
+                          </Link>
                         )}
                       </Menu.Item>
 
                       <Menu.Item>
                         {({ active }) => (
-                          <p
-                            onClick={() => navigate('/friends')}
+                          <Link
+                            to = '/friends'
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Friends
-                          </p>
+                          </Link>
                         )}
                       </Menu.Item>
 
                       <Menu.Item>
                         {({ active }) => (
-                          <p
+                          <Link
                             onClick={handleClick}
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Log out
-                          </p>
+                          </Link>
                         )}
                       </Menu.Item>
                     </Menu.Items>
@@ -228,7 +231,7 @@ const Navbar = ({ change, setChange }) => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={avatarImage}
                         alt=""
                       />
                     </Menu.Button>
@@ -244,23 +247,23 @@ const Navbar = ({ change, setChange }) => {
                   >
                     <Menu.Items className={`absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isDarkMode ? 'bg-zinc-800' : 'bg-white'}`}>                      <Menu.Item>
                       {({ active }) => (
-                        <p
-                          onClick={() => navigate('/login')}
+                        <Link
+                          to = '/login'
                           className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                         >
                           Log In
-                        </p>
+                        </Link>
                       )}
                     </Menu.Item>
 
                       <Menu.Item>
                         {({ active }) => (
-                          <p
-                            onClick={() => navigate('/signup')}
+                          <Link
+                            to = '/signup'
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Sign Up
-                          </p>
+                          </Link>
                         )}
                       </Menu.Item>
 

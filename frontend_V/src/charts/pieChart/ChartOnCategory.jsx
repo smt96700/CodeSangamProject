@@ -48,19 +48,19 @@ function ChartOnCategory({workouts}) {
 
                 options = {
                     {
-                        
+
                         theme : {
-                            mode : isDarkMode? 'dark' : 'light',
+                            mode : isDarkMode? 'dark' : '',
                         },
                         
                         labels: ['Meals/ Entertainment', 'Travel', 'Electricity Bill', 'Water Bill', 'LPG Gas', 'Internet and Phone Bills', 'Electronic Equipments', 'Training/ Education', 'Grocery', 'Clothing'],
-                        options: {
-                            labels: {
-                              style: {
-                                colors: ['#ffffff', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff','#ff0000'], // Set your desired label text colors
-                              },
-                            },
-                          },
+                        // options: {
+                        //     labels: {
+                        //       style: {
+                        //         colors: ['#ffffff', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff', '#ff0000', '#00ff00', '#0000ff','#ff0000'], // Set your desired label text colors
+                        //       },
+                        //     },
+                        //   },
                     }
                 }
             >

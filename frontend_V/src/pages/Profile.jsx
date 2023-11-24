@@ -94,92 +94,111 @@ import moment from 'moment-timezone';
 import { useTheme } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
+import '../Profile.css';
+import avatarImage from '../assets/avatar.png';
+import coverImage from '../assets/businessGrowth.png';
+
 
 function Profile() {
-  const { profileInfo, dispatch } = useProfileContext();
-  const { user } = useAuthContext();
+    const { profileInfo, dispatch } = useProfileContext()
+    const { user } = useAuthContext();
 
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
+    //console.log(profileInfo)
+    //conditional styling for light, dark mode
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
 
-  const utcTimestamp = profileInfo && profileInfo.dateOfBirth;
-  const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
-  const dateTime = newTimestamp.format('dddd, MMMM D, YYYY');
+    const utcTimestamp = profileInfo && profileInfo.dateOfBirth;
+    const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
+    const dateTime = newTimestamp.format("dddd, MMMM D, YYYY")
 
-  useEffect(() => {
-    const getProfile = async () => {
-      console.log('fetched profile');
+    useEffect(() => {
+        const getProfile = async () => {
+            console.log("fetched profile")
 
-      const email = user.email;
-      console.log(email);
-      const encodedEmail = encodeURIComponent(email);
-      const response = await fetch(
-        `http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`
-      );
-      const json = await response.json();
+            const email = user.email
+            console.log(email)
+            const encodedEmail = encodeURIComponent(email);
+            const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
+            const json = await response.json()
 
-      if (response.ok) {
-        dispatch({ type: 'PROFILEADDED', payload: json });
-      }
-    };
+            if (response.ok) {
+                dispatch({ type: 'PROFILEADDED', payload: json })
+            }
+        }
+        if (user) {
+            getProfile()
+        }
 
-    if (user) {
-      getProfile();
-    }
-  }, []);
+    }, []);
 
-  return profileInfo ? (
-    <div className={`profile ${isDarkMode ? 'bg-zinc-700' : 'bg-white'}`}>
-      <div className="container mx-auto px-4 py-8">
-        <h1 className={`text-4xl font-semibold text-center mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`}>
-          My Profile
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <p className="text-lg font-medium mb-4">Personal Details</p>
-            <dl>
-              <ProfileDetail label="Full Name" value={profileInfo.name} />
-              <ProfileDetail label="Date of Birth" value={dateTime} />
-              <ProfileDetail label="Gender" value={profileInfo.gender} />
-              <ProfileDetail
-                label="Mobile Number"
-                value={profileInfo.contactNumber}
-              />
-              <ProfileDetail label="Currency" value={profileInfo.currency} />
-            </dl>
-          </div>
-          <div>
-            <p className="text-lg font-medium mb-4">Financial Details</p>
-            <dl>
-              <ProfileDetail
-                label="Monthly Salary"
-                value={profileInfo.monthlySalary}
-              />
-              <ProfileDetail
-                label="Monthly Expense (Expected)"
-                value={profileInfo.monthlyExpense}
-              />
-              <ProfileDetail
-                label="Address"
-                value={`${profileInfo.city}, ${profileInfo.state}, ${profileInfo.country}`}
-              />
-            </dl>
-          </div>
-        </div>
-      </div>
-    </div>
-  ) : (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  );
+    return profileInfo ? (
+
+        <div className={`p-12 mx-4 rounded-lg ${isDarkMode ? 'bg-zinc-800' : 'bg-white'}`}>
+            <div className="card-body">
+                <div className={` ${isDarkMode ? 'bg-zinc-800' : 'bg-white'}`}>
+                    <div className='flex flex-wrap justify-center items-center h-full'>
+                        <img className='pro-img' src={avatarImage} alt="user" />
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <div className="container mx-auto px-4 py-8">
+                        <h1 className={`text-4xl font-semibold text-center mb-6 font-Poppins bg-sky-600 p-3 text-white rounded-xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                            My Profile
+                        </h1>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className = {`rounded-xl ${isDarkMode ? 'bg-zinc-700' : 'bg-gray-100'}`}>
+                                <p className="text-xl font-semibold mb-4 mt-4 underline">Personal Details</p>
+                                <dl>
+                                    <ProfileDetail label="Full Name" value={profileInfo.name} />
+                                    <ProfileDetail label="Date of Birth" value={dateTime} />
+                                    <ProfileDetail label="Gender" value={profileInfo.gender} />
+                                    <ProfileDetail
+                                        label="Mobile Number"
+                                        value={profileInfo.contactNumber}
+                                    />
+                                    <ProfileDetail label="Currency" value={profileInfo.currency} />
+                                </dl>
+                            </div>
+                            <div className = {`rounded-xl ${isDarkMode ? 'bg-zinc-700' : 'bg-gray-100'}`}>
+                                <p className="text-xl font-semibold mb-4 mt-4 underline">Financial Details</p>
+                                <dl>
+                                    <ProfileDetail
+                                        label="Monthly Salary"
+                                        value={profileInfo.monthlySalary}
+                                    />
+                                    <ProfileDetail
+                                        label="Monthly Expense (Expected)"
+                                        value={profileInfo.monthlyExpense}
+                                    />
+                                    <ProfileDetail
+                                        label="Address"
+                                        value={`${profileInfo.city}, ${profileInfo.state}, ${profileInfo.country}`}
+                                    />
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div >
+
+
+    ) : (
+        <></>
+    )
 }
 
 const ProfileDetail = ({ label, value }) => (
-  <div className="mb-4">
-    <dt className={!(useTheme().palette.mode === 'dark' )? "font-semibold text-gray-600" : "font-semibold text-white"}>{label}</dt>
-    <dd className="mt-1 text-lg">{value}</dd>
-  </div>
+    <div className="mb-4">
+        <dt className={!(useTheme().palette.mode === 'dark') ? "font-semibold text-gray-600" : "font-semibold text-white"}>{label}</dt>
+        <dd className="mt-1 text-lg">{value}</dd>
+    </div>
 );
 
-export default Profile;
+export default Profile
+
+
+
