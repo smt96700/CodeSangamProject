@@ -2,9 +2,12 @@ import { useState } from "react";
 import {useLogin} from "../hooks/useLogin"
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 
 function Login(){
+    const navigate = useNavigate()
     const [email, setEmail]= useState('');
     const [password, setPassword] = useState('');
     const {login, isLoading, error}= useLogin();
@@ -17,6 +20,7 @@ function Login(){
     const isDarkMode = theme.palette.mode === 'dark';
 
     return(
+        <>
         <form className={`login ${isDarkMode ? 'bg-zinc-700' : 'bg-white'}`} onSubmit={handleSubmit}> 
             <h1 id = "label" className = "flex flex-wrap justify-center text-3xl font-light">Login</h1>
 
@@ -47,6 +51,13 @@ function Login(){
              <button className = "my-5" disabled= {isLoading}>Login</button>
              {error && <div className="error">{error}</div>}
         </form>
+        <div className = {`flex flex-wrap justify-center items-center font-medium${isDarkMode ? 'text-white' : 'text-blue-500'}`}>
+            Don't have an Account? 
+            <div className="mx-2 text-white">
+            <Button variant="contained" onClick = {() => navigate('/signup')}>Sign Up</Button>
+            </div>
+        </div>
+        </>
     )
 }
 

@@ -199,7 +199,9 @@ const Home = () => {
       {workouts && 
         <ChartOnCategory workouts = {workouts}/>
       }
-      <CurrencyConverter />
+      {workouts && 
+        <CurrencyConverter/>
+      }
       </div>
     </div>
      

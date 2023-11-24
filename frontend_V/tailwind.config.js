@@ -9,6 +9,7 @@ export default {
       fontFamily : {
         'Agbalumo' : ['Agbalumo'],
         'Poppins' : ['Poppins'],
+        'Archivo' : ['Archivo']
       },
     },
   },

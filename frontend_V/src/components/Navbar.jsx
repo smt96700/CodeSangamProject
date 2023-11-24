@@ -17,6 +17,9 @@ import { useTheme } from '@mui/material/styles';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 
+import avatarImage from '../assets/avatar.png';
+
+
 
 const label = { inputProps: { 'aria-label': 'Color switch demo' } };
 
@@ -37,25 +40,25 @@ const Navbar = ({ change, setChange }) => {
     logout();
   }
 
-  const fetchProfile = () => {
-    const getProfile = async () => {
-      console.log("fetched profile")
+  // const fetchProfile = () => {
+  //   const getProfile = async () => {
+  //     console.log("fetched profile")
 
-      const email = user.email
-      console.log(email)
-      const encodedEmail = encodeURIComponent(email);
-      const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
-      const json = await response.json()
+  //     const email = user.email
+  //     console.log(email)
+  //     const encodedEmail = encodeURIComponent(email);
+  //     const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
+  //     const json = await response.json()
 
-      if (response.ok) {
-        dispatch({ type: 'PROFILEADDED', payload: json })
-        navigate('/profile')
-      }
-    }
-    if (user) {
-      getProfile()
-    }
-  }
+  //     if (response.ok) {
+  //       dispatch({ type: 'PROFILEADDED', payload: json })
+  //       navigate('/profile')
+  //     }
+  //   }
+  //   if (user) {
+  //     getProfile()
+  //   }
+  // }
 
   // for the drawer
   const [state, setState] = React.useState({
@@ -166,8 +169,8 @@ const Navbar = ({ change, setChange }) => {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="h-10 w-10 rounded-full"
+                        src={avatarImage}
                         alt=""
                       />
                     </Menu.Button>
@@ -185,7 +188,7 @@ const Navbar = ({ change, setChange }) => {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            onClick={fetchProfile}
+                            to = '/profile'
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Your Profile
@@ -228,7 +231,7 @@ const Navbar = ({ change, setChange }) => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={avatarImage}
                         alt=""
                       />
                     </Menu.Button>
@@ -245,7 +248,7 @@ const Navbar = ({ change, setChange }) => {
                     <Menu.Items className={`absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isDarkMode ? 'bg-zinc-800' : 'bg-white'}`}>                      <Menu.Item>
                       {({ active }) => (
                         <Link
-                          onClick={() => navigate('/login')}
+                          to = '/login'
                           className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                         >
                           Log In
@@ -256,7 +259,7 @@ const Navbar = ({ change, setChange }) => {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            onClick={() => navigate('/signup')}
+                            to = '/signup'
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Sign Up
