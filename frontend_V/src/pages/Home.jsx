@@ -184,17 +184,18 @@ const Home = () => {
       </>
     
   ) : (
-    <></>
+    <>
+    </>
   )}
 
     </div>
     <div className="home">
-      <div className="workouts">
+      <div className="workouts ">
         {workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
-      <div>
+      <div className = ''>
       {workouts && 
         <ChartOnCategory workouts = {workouts}/>
       }

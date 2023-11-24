@@ -1,6 +1,7 @@
 import { useProfileContext } from '../hooks/useProfileContext';
 import moment from 'moment-timezone';
 import { useTheme } from '@mui/material/styles';
+import { useEffect } from 'react';
 
 function Profile () {
     const {profileInfo} = useProfileContext()
@@ -16,7 +17,7 @@ function Profile () {
 
     return (
         <>
-        <div className={`profile ${isDarkMode? 'bg-zinc-700' : 'bg-white'}`}>
+        {/* <div className={`profile ${isDarkMode? 'bg-zinc-700' : 'bg-white'}`}>
             <div className="px-4">
             <h1 className = "flex flex-wrap justify-center text-3xl font-light font-serif py-2">My Profile</h1>
                 <p className="flex flex-wrap justify-center    ">Personal details.</p>
@@ -57,7 +58,18 @@ function Profile () {
                     </div>
                 </dl>
             </div>
-        </div>
+        </div> */}
+
+<div className="profileInfo-profile">
+      <img src={profileInfo.avatar} alt={`${profileInfo.name}'s avatar`} />
+      <div className="profileInfo-details">
+        <h2>{profileInfo.name}</h2>
+        <p>Email: {profileInfo.email}</p>
+        <p>Username: {profileInfo.city}</p>
+        <p>Location: {profileInfo.state}</p>
+        {/* Add more details based on your user object */}
+      </div>
+    </div>
 
         </>
     )
