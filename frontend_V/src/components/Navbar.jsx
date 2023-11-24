@@ -37,25 +37,25 @@ const Navbar = ({ change, setChange }) => {
     logout();
   }
 
-  const fetchProfile = () => {
-    const getProfile = async () => {
-      console.log("fetched profile")
+  // const fetchProfile = () => {
+  //   const getProfile = async () => {
+  //     console.log("fetched profile")
 
-      const email = user.email
-      console.log(email)
-      const encodedEmail = encodeURIComponent(email);
-      const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
-      const json = await response.json()
+  //     const email = user.email
+  //     console.log(email)
+  //     const encodedEmail = encodeURIComponent(email);
+  //     const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
+  //     const json = await response.json()
 
-      if (response.ok) {
-        dispatch({ type: 'PROFILEADDED', payload: json })
-        navigate('/profile')
-      }
-    }
-    if (user) {
-      getProfile()
-    }
-  }
+  //     if (response.ok) {
+  //       dispatch({ type: 'PROFILEADDED', payload: json })
+  //       navigate('/profile')
+  //     }
+  //   }
+  //   if (user) {
+  //     getProfile()
+  //   }
+  // }
 
   // for the drawer
   const [state, setState] = React.useState({
@@ -185,7 +185,7 @@ const Navbar = ({ change, setChange }) => {
                       <Menu.Item>
                         {({ active }) => (
                           <p
-                            onClick={fetchProfile}
+                            onClick={()=> navigate('/profile')}
                             className={classNames(active ? ((isDarkMode) ? 'bg-zinc-900 text-white' : 'bg-gray-100 text-black') : '', 'block px-4 py-2 text-sm')}
                           >
                             Your Profile

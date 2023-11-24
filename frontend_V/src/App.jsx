@@ -1,21 +1,29 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useState } from 'react';
+import { lazy, useState, Suspense } from 'react';
 
 //user
 import { useAuthContext } from './hooks/useAuthContext'
 import { useProfileContext } from './hooks/useProfileContext'
 
 // pages & components
-import Home from './pages/Home'
-import Navbar from './components/Navbar'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import UserProfile from './pages/UserProfile'
-import Profile from './pages/Profile'
-import Friends from './components/Friends'
+// import Home from './pages/Home'
+// import Navbar from './components/Navbar'
+// import Login from './pages/Login'
+// import Signup from './pages/Signup'
+// import UserProfile from './pages/UserProfile'
+// import Profile from './pages/Profile'
+// import Friends from './components/Friends'
 
+
+const Home= lazy(()=> import('./pages/Home'))
+const Navbar= lazy(()=> import('./components/Navbar'))
+const Login= lazy(()=> import('./pages/Login'))
+const Signup= lazy(()=> import('./pages/Signup'))
+const UserProfile= lazy(()=> import('./pages/UserProfile'))
+const Profile= lazy(()=> import('./pages/Profile'))
+const Friends= lazy(()=> import('./components/Friends'))
 function App() {
   const {user} = useAuthContext();
   // const userLocal= localStorage.getItem('user');
@@ -52,6 +60,7 @@ function App() {
       
     <div className="App">
       <BrowserRouter>
+        <Suspense fallback={<div>Loading...</div>}>
         <Navbar change = {darkMode} setChange = {() => setDarkMode(!darkMode)}/>
         <div className="pages">
           <Routes>
@@ -88,6 +97,7 @@ function App() {
 
           </Routes>
         </div>
+        </Suspense>
       </BrowserRouter>
     </div>
     </ThemeProvider>

@@ -1,21 +1,42 @@
 import { useProfileContext } from '../hooks/useProfileContext';
 import moment from 'moment-timezone';
 import { useTheme } from '@mui/material/styles';
-
+import { useEffect } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
 function Profile () {
-    const {profileInfo} = useProfileContext()
+    const {profileInfo, dispatch} = useProfileContext()
+    const {user}= useAuthContext();
     //console.log(profileInfo)
 
     //conditional styling for light, dark mode
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
 
-    const utcTimestamp =  profileInfo.dateOfBirth;
+    const utcTimestamp = profileInfo &&  profileInfo.dateOfBirth;
     const newTimestamp = moment(utcTimestamp).tz('Asia/Kolkata');
     const dateTime= newTimestamp.format("dddd, MMMM D, YYYY")
+    useEffect(()=>{
+        const getProfile = async () => {
+          console.log("fetched profile")
+    
+          const email = user.email
+          console.log(email)
+          const encodedEmail = encodeURIComponent(email);
+          const response = await fetch(`http://localhost:4000/api/profile/getProfile?email=${encodedEmail}`)
+          const json = await response.json()
+    
+          if (response.ok) {
+            dispatch({ type: 'PROFILEADDED', payload: json })
+          }
+        }
+        if (user) {
+          getProfile()
+        }
+      
+    }, []);
 
-    return (
-        <>
+    return profileInfo ? (
+        <> 
         <div className={`profile ${isDarkMode? 'bg-zinc-700' : 'bg-white'}`}>
             <div className="px-4">
             <h1 className = "flex flex-wrap justify-center text-3xl font-light font-serif py-2">My Profile</h1>
@@ -60,6 +81,8 @@ function Profile () {
         </div>
 
         </>
+    ) : (
+        <div><h1>Hello</h1></div>
     )
 }
 
