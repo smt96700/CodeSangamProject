@@ -2,12 +2,14 @@ import { TabPanel, TabPanels, VStack, Text } from "@chakra-ui/react"
 import { useContext, useEffect, useRef } from "react";
 import { FriendContext, MessageContext } from "./Friends";
 import ChatBox from "./ChatBox";
-
+import { useTheme } from "@mui/material/styles";
 const Chat= ({userid})=>{
     console.log("insideChat", userid);
     const {friendList, setFriendList}= useContext(FriendContext);
     const {messages}= useContext(MessageContext);
     const bottomDiv= useRef(null);
+    const theme= useTheme();
+    const isDarkMode= theme.palette.mode === 'dark'; 
     useEffect(()=>{
         bottomDiv.current?.scrollIntoView();
     })
@@ -92,7 +94,20 @@ const Chat= ({userid})=>{
     ( 
     <VStack justify= "center"  pt= "5rem" w="100%" textAlign="center" fontSize="large">
         <TabPanels>
-            <Text>No Friends :( Click to add Friends</Text>
+        <div className="text-center">
+    <p className= {isDarkMode ? "text-xl  text-white inline-block animate-bounce": "text-xl  text-gray-800 inline-block animate-bounce"}>
+      No Friends :( Click to add Friends
+    </p>
+  </div>
+              <div className="flex items-center justify-center h-full mt-24">
+      <div className="w-48 h-48 rounded-full overflow-hidden">
+        <img
+          className="w-full h-full object-cover"
+          src="https://cdn.dribbble.com/users/2058540/screenshots/8225138/media/af6d6d059328c6f2f9f6e7878c094c7e.gif"
+          alt=""
+        />
+      </div>
+    </div>
         </TabPanels>
        
     </VStack>
