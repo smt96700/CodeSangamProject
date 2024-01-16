@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useLogin} from "../hooks/useLogin"
+import {useGoogle} from "../hooks/useGoogle"
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -11,10 +12,19 @@ function Login(){
     const [email, setEmail]= useState('');
     const [password, setPassword] = useState('');
     const {login, isLoading, error}= useLogin();
+
+    const {google} = useGoogle();
+
     const handleSubmit= async (e)=>{
          e.preventDefault();
          await login(email, password);
     }
+
+    const handleClick = async() => {
+        window.open('http://localhost:4000/api/user/auth/google', '_self')
+    }
+
+    
     //conditional styling for light, dark mode
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
@@ -57,6 +67,9 @@ function Login(){
             <Button variant="contained" onClick = {() => navigate('/signup')}>Sign Up</Button>
             </div>
         </div>
+        <div className="mx-2 text-white">
+            <Button variant="contained" onClick = {handleClick}>Google +</Button>
+            </div>
         </>
     )
 }

@@ -51,6 +51,7 @@
 
 require("dotenv").config();
 
+const passportSetup = require('./config/passportSetup');
 const express = require("express");
 const mongoose = require("mongoose");
 const workoutRoutes = require("./routes/workouts");
@@ -63,22 +64,46 @@ const cors = require("cors");
 // const http = require('http')
 const { Server } = require("socket.io");
 
+//cookie-session
+const cookieSession = require('cookie-session')
+const passport = require('passport')
+
 
 // express app
 const app = express();
-app.use(cors());
+
 
 // middleware
 app.use(express.json());
 
 app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
   console.log(req.path, req.method);
+  console.log("HG")
   next();
 });
+app.use(cookieSession({
+  name: "session",
+  maxAge : 3*24*60*60*1000,
+  keys : ["imnkjk"]
+}))
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session())
+
+app.use(cors(
+  {
+    origin : "http://localhost:5173",
+    methods: "GET, POST, OPTIONS",
+    credentials: true,
+  }
+));
+
 
 // routes
 app.use("/api/workouts", workoutRoutes);
-app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes); 
 app.use("/api/profile", profileRoutes);
 app.use("/api/friends", friendsRoutes);
 app.use("/api/messages", messagesRoutes);
@@ -96,7 +121,7 @@ mongoose
     // create Socket.IO instance
     const io = new Server(server, {
       cors: {
-        origin: " http://localhost:5173",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"],
         credentials: true,
       },

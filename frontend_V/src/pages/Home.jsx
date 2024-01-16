@@ -9,7 +9,6 @@ import Slide from '@mui/material/Slide';
 
 import { useEffect, useState }from 'react'
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
-import moment from 'moment-timezone';
 
 // components
 import WorkoutDetails from '../components/WorkoutDetails'
@@ -18,9 +17,17 @@ import ChartOnCategory from '../charts/pieChart/ChartOnCategory'
 //authContext
 import { useAuthContext } from '../hooks/useAuthContext'
 import CurrencyConverter from '../components/CurrencyConverter'
+
 const Home = () => {
   // states for the notification bar
   const [open, setOpen] = React.useState(false);
+  const [all, setAll] = useState(true);
+  const [categories, setCategories] = useState(false);
+  const [day, setDay] = useState(false);
+  const [date, setDate] = useState(false);
+  const [month, setMonth] = useState(false);
+
+  const [selectCategory, setSelectCategory] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,7 +45,8 @@ const Home = () => {
 
   useEffect(() => {
     console.log("chal rha h")
-    const fetchWorkouts = async () => {
+    const fetchAllWorkouts = async () => {
+      console.log("inside all");
       const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
       const json = await response.json()
 
@@ -46,11 +54,68 @@ const Home = () => {
         dispatch({type: 'SET_WORKOUTS', payload: json})
       }
     }
-     if(user){
-      fetchWorkouts()
+
+    const fetchCategoryWorkouts = async (category) => {
+      console.log("inside categories");
+      console.log(category);
+      const encodedCategory = encodeURIComponent(category);
+      const response = await fetch(`http://localhost:4000/api/workouts/category?category=${encodedCategory}`, {headers:{'Authorization': `Bearer ${user.token}`}})
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({type: 'SET_WORKOUTS', payload: json})
+      }
+    }
+
+    const fetchDayWorkouts = async () => {
+      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({type: 'SET_WORKOUTS', payload: json})
+      }
+    }
+
+    const fetchDateWorkouts = async () => {
+      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({type: 'SET_WORKOUTS', payload: json})
+      }
+    }
+
+    const fetchMonthWorkouts = async () => {
+      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
+      const json = await response.json()
+
+      if (response.ok) {
+        dispatch({type: 'SET_WORKOUTS', payload: json})
+      }
+    }
+
+
+     if(user && all){
+      fetchAllWorkouts()
+     }
+
+     if (user && categories) {
+      fetchCategoryWorkouts('Clothing');
+     }
+
+     if (user && day) {
+      fetchDayWorkouts();
+     }
+
+     if (user && date) {
+      fetchDateWorkouts();
+     }
+
+     if (user && month) {
+      fetchMonthWorkouts();
      }
      
-  }, [user, dispatch])
+  }, [user, dispatch, all, categories])
 
   useEffect(() => {
     const callNotification = () => {
@@ -189,9 +254,72 @@ const Home = () => {
   )}
 
     </div>
+    <button
+      onClick={ () => {
+        setAll(true);
+        setCategories(false);
+        setDate(false);
+        setDay(false);
+        setMonth(false);
+      }}
+    >
+      All
+    </button>
+
+    <button
+      onClick={ () => {
+        setAll(false);
+        setCategories(true);
+        setDate(false);
+        setDay(false);
+        setMonth(false);
+      }}
+    >
+      Categories
+    </button>
+
+    <button
+      onClick={ () => {
+        setAll(false);
+        setCategories(false);
+        setDate(false);
+        setDay(true);
+        setMonth(false);
+      }}
+    >
+      Day
+    </button>
+
+    <button
+      onClick={ () => {
+        setAll(false);
+        setCategories(false);
+        setDate(true);
+        setDay(false);
+        setMonth(false);
+      }}
+    >
+      Date
+    </button>
+
+    <button
+      onClick={ () => {
+        setAll(false);
+        setCategories(false);
+        setDate(false);
+        setDay(false);
+        setMonth(true);
+      }}
+    >
+      Month
+    </button>
+    
     <div className="home">
       <div className="workouts ">
-        {workouts && workouts.map((workout) => (
+        {all && workouts && workouts.map((workout) => (
+          <WorkoutDetails key={workout._id} workout={workout} />
+        ))}
+        {categories && workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>
