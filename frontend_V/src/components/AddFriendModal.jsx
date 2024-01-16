@@ -8,6 +8,9 @@ import { useTheme } from "@mui/material/styles";
 const AddFriendModal= ({isOpen, onClose})=>{
     const [error, setError]= useState("");
     const {setFriendList}= useContext(FriendContext);
+
+
+    
     const socket= getSocketInstance();
     const closeModal = useCallback(()=>{
          setError("");
@@ -29,7 +32,7 @@ const AddFriendModal= ({isOpen, onClose})=>{
             socket.emit("add_friend", values.friendName, ({errorMsg, done, newFriend})=>{
                 if(done){
                     setFriendList(prev => [newFriend, ...prev] );
-                    setMessage(prev => [...prev]);
+                    //setMessage(prev => [...prev]);
                     closeModal();
                     return;
                 }

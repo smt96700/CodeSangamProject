@@ -2,6 +2,7 @@ const express = require('express')
 const {
   createWorkout,
   getWorkouts,
+  categoryWorkouts,
   getWorkout,
   deleteWorkout,
   updateWorkout
@@ -16,6 +17,9 @@ router.use(requireAuth);
 
 // GET all workouts
 router.get('/', getWorkouts)
+
+// get category wise workout
+router.get('/category', categoryWorkouts);
 
 //GET a single workout
 router.get('/:id', getWorkout)

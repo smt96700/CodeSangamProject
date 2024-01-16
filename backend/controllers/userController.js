@@ -54,4 +54,23 @@ const logoutUser= async (req, res)=>{
         res.status(400).json({error: error.message});
     }
 }
-module.exports= {loginUser, signupUser, logoutUser};
+
+
+
+const googleAuthRedirect = async (req, res) => {
+    //handle passport
+    
+    // res.send(req.user) 
+
+    console.log("inside wait: ", req.user)
+    const user = req.user;
+    const email = user.email;
+    const token = createToken(user._id);
+    const isFilledUserProfile = user.isFilledUserProfile;
+
+    const userid = user._id;
+    console.log("last")
+    res.status(200).json({email, token, isFilledUserProfile, userid})
+}
+
+module.exports= {loginUser, signupUser, logoutUser, googleAuthRedirect};
