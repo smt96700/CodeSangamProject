@@ -35,6 +35,9 @@ const userSchema= new Schema({
         default: false
     },
     messages: [{
+           uniqueId: {
+            type: String
+           },
            from: {
             type: String
            },
@@ -51,7 +54,15 @@ const userSchema= new Schema({
           updatedAt: {
             type: Date,
             default: Date.now,
-          }
+          },
+          isLenderOk: {       
+            type: Boolean,
+            default: false  
+        },
+        isBorrowerOk: {   
+            type: Boolean,
+            default: false  
+        }
     }]
 }, {timestamps:true});
 

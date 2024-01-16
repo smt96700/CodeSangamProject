@@ -24,9 +24,15 @@ const ChatBox = ({ userid }) => {
   return (
     <Formik
       initialValues={{ message: "" }}
+      // validationSchema={Yup.object({
+      //   message: Yup.string().required("Message is required").min(1, "Message must be at least 1 character").max(255, "Message must be at most 255 characters"),
+      // })}
       validationSchema={Yup.object({
-        message: Yup.string().required("Message is required").min(1, "Message must be at least 1 character").max(255, "Message must be at most 255 characters"),
-      })}
+        message: Yup.number()  // Ensures the input is a number
+            .required("Amount is required")
+            .min(1, "Amount must be a positive number or 0")  // Adjust the minimum value as needed
+            .max(1000, "Amount must be at most 1000")  // Adjust the maximum value as needed
+    })}
       onSubmit={(values, actions) => {
         const message = { to: userid, from: null, content: values.message };
         socket.emit("dm", message);
@@ -42,7 +48,7 @@ const ChatBox = ({ userid }) => {
             <Input 
             as= {Field}
             name= "message"
-            placeholder="Type message here.."
+            placeholder="Type Amount here.."
             size= "lg"
             autoComplete="off"
             mt="20px"

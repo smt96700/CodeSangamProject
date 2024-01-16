@@ -1,5 +1,5 @@
 const User= require('../models/userModel');
-
+const {v4: uuidv4}= require('uuid');
 //cb is callback which is called when addFriend excutes
 module.exports.addFriend= async (socket, friendName, cb)=>{
     console.log(friendName, socket.username);
@@ -60,17 +60,17 @@ module.exports.addFriend= async (socket, friendName, cb)=>{
 
 module.exports.dm= async (io, userSocketMap, socket, message)=>{
      message.from= socket.userid;
-
+     const uniqueMessageId= uuidv4();
      //to from content
      const user=await User.findOneAndUpdate(
         { email: socket.username }, // Query to find the user by ID
-        { $push: { messages: { to: message.to, from: message.from, content: message.content} } }, // Use $push to add the new friend to the array
+        { $push: { messages: {uniqueId: uniqueMessageId, to: message.to, from: message.from, content: message.content} } }, // Use $push to add the new friend to the array
         { new: true } // To return the updated document
       )
 
       const friend=await User.findOneAndUpdate(
         { _id: message.to }, // Query to find the user by ID
-        { $push: { messages: { to: message.to, from: message.from, content: message.content} } }, // Use $push to add the new friend to the array
+        { $push: { messages: { uniqueId: uniqueMessageId, to: message.to, from: message.from, content: message.content} } }, // Use $push to add the new friend to the array
         { new: true } // To return the updated document
       )
       console.log("message user: ", message.to);
