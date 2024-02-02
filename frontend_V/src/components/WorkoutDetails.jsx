@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { useAuthContext } from '../hooks/useAuthContext'
 import moment from 'moment-timezone';
 const WorkoutDetails = ({ workout }) => {
+ 
   const { dispatch } = useWorkoutsContext()
   const {user}= useAuthContext();
 

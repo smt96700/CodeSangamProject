@@ -7,8 +7,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import { useEffect, useState }from 'react'
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 // components
 import WorkoutDetails from '../components/WorkoutDetails'
@@ -16,18 +18,35 @@ import ChartOnCategory from '../charts/pieChart/ChartOnCategory'
 
 //authContext
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useWorkoutsContext } from '../hooks/useWorkoutsContext';
 import CurrencyConverter from '../components/CurrencyConverter'
+
+//datepicker
+import DateRange from '../components/DateRange';
 
 const Home = () => {
   // states for the notification bar
   const [open, setOpen] = React.useState(false);
   const [all, setAll] = useState(true);
   const [categories, setCategories] = useState(false);
-  const [day, setDay] = useState(false);
   const [date, setDate] = useState(false);
-  const [month, setMonth] = useState(false);
 
   const [selectCategory, setSelectCategory] = useState('');
+  const categoryArray = ["Meals/ Entertainment", "Travel", "Electricity Bill", "Water Bill", "LPG Gas", "Internet and Phone Bills", "Electronic Equipments", "Training/ Education", "Grocery", "Clothing"];
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openBox = Boolean(anchorEl)
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+    console.log("handle click chala")
+    
+  };
+  const handleCloseBox = () => {
+    setAnchorEl(null)
+    setValues();
+    setCategories(true)
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,6 +57,11 @@ const Home = () => {
     setOpen(false);
   };
 
+  const setValues = () => {
+      setAll(false);
+      setCategories(false);
+      setDate(false);
+  }
 
   const {workouts, dispatch} = useWorkoutsContext()
   const {user}= useAuthContext();
@@ -59,6 +83,7 @@ const Home = () => {
       console.log("inside categories");
       console.log(category);
       const encodedCategory = encodeURIComponent(category);
+      
       const response = await fetch(`http://localhost:4000/api/workouts/category?category=${encodedCategory}`, {headers:{'Authorization': `Bearer ${user.token}`}})
       const json = await response.json()
 
@@ -67,32 +92,6 @@ const Home = () => {
       }
     }
 
-    const fetchDayWorkouts = async () => {
-      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
-      }
-    }
-
-    const fetchDateWorkouts = async () => {
-      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
-      }
-    }
-
-    const fetchMonthWorkouts = async () => {
-      const response = await fetch('http://localhost:4000/api/workouts', {headers:{'Authorization': `Bearer ${user.token}`}})
-      const json = await response.json()
-
-      if (response.ok) {
-        dispatch({type: 'SET_WORKOUTS', payload: json})
-      }
-    }
 
 
      if(user && all){
@@ -100,22 +99,14 @@ const Home = () => {
      }
 
      if (user && categories) {
-      fetchCategoryWorkouts('Clothing');
-     }
-
-     if (user && day) {
-      fetchDayWorkouts();
-     }
-
-     if (user && date) {
-      fetchDateWorkouts();
-     }
-
-     if (user && month) {
-      fetchMonthWorkouts();
-     }
+      console.log("function ke andar h")
      
-  }, [user, dispatch, all, categories])
+     
+      fetchCategoryWorkouts(selectCategory);
+     }
+
+     
+  }, [user, dispatch, all, categories, selectCategory, date])
 
   useEffect(() => {
     const callNotification = () => {
@@ -254,72 +245,81 @@ const Home = () => {
   )}
 
     </div>
-    <button
-      onClick={ () => {
-        setAll(true);
-        setCategories(false);
-        setDate(false);
-        setDay(false);
-        setMonth(false);
-      }}
-    >
-      All
-    </button>
 
-    <button
-      onClick={ () => {
-        setAll(false);
-        setCategories(true);
-        setDate(false);
-        setDay(false);
-        setMonth(false);
-      }}
-    >
-      Categories
-    </button>
+    <div className='flex flex-wrap'>
+    <Button
+    onClick={ () => {
+      setValues()
+      setAll(true)
+    }}
+    >All</Button>
 
-    <button
-      onClick={ () => {
-        setAll(false);
-        setCategories(false);
-        setDate(false);
-        setDay(true);
-        setMonth(false);
-      }}
-    >
-      Day
-    </button>
 
-    <button
-      onClick={ () => {
-        setAll(false);
-        setCategories(false);
-        setDate(true);
-        setDay(false);
-        setMonth(false);
-      }}
-    >
-      Date
-    </button>
+      <Button
+        id="demo-positioned-button"
+        aria-controls={openBox ? 'demo-positioned-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={openBox ? 'true' : undefined}
+        
+        onClick={handleClick}
+      >
+        Select_Category
+      </Button>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={openBox}
+        onClose={handleCloseBox}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
 
-    <button
-      onClick={ () => {
-        setAll(false);
-        setCategories(false);
-        setDate(false);
-        setDay(false);
-        setMonth(true);
-      }}
-    >
-      Month
-    </button>
+        {categoryArray.map((category) => (
+          <MenuItem key={category} onClick={ () => {
+            setSelectCategory(category)
+            handleCloseBox()
+          }}>
+            {category}
+          </MenuItem>
+        ))}
+
+      </Menu>
+      
+      <Button
+        onClick={() => {
+          setValues();
+          setDate(true);
+        }}
+      >
+      <DateRange />
+      </Button>
+      
+
+      </div>
+    
+    
+
+    
     
     <div className="home">
       <div className="workouts ">
+        
         {all && workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
         {categories && workouts && workouts.map((workout) => (
+          workout.category === selectCategory && (
+            <WorkoutDetails key={workout._id} workout={workout} />
+          )
+        ))}
+        {date && workouts && workouts.map((workout) => (
           <WorkoutDetails key={workout._id} workout={workout} />
         ))}
       </div>

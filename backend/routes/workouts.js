@@ -5,7 +5,8 @@ const {
   categoryWorkouts,
   getWorkout,
   deleteWorkout,
-  updateWorkout
+  updateWorkout,
+  dateWorkouts,
 } = require('../controllers/workoutController')
 
 const requireAuth= require('../middleware/requireAuth');
@@ -32,6 +33,9 @@ router.delete('/:id', deleteWorkout)
 
 // UPDATE a workout
 router.patch('/:id', updateWorkout)
+
+// get workout in a date range
+router.post('/dateRange', dateWorkouts);
 
 
 module.exports = router

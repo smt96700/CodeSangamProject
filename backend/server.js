@@ -82,6 +82,7 @@ app.use((req, res, next) => {
   console.log("HG")
   next();
 });
+
 app.use(cookieSession({
   name: "session",
   maxAge : 3*24*60*60*1000,
@@ -95,7 +96,7 @@ app.use(passport.session())
 app.use(cors(
   {
     origin : "http://localhost:5173",
-    methods: "GET, POST, OPTIONS",
+    methods: "GET, POST, OPTIONS, PUT, DELETE",
     credentials: true,
   }
 ));
@@ -122,7 +123,7 @@ mongoose
     const io = new Server(server, {
       cors: {
         origin: "http://localhost:5173",
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "PUT"],
         credentials: true,
       },
     });

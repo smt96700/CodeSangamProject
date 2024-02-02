@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+import GoogleButton from 'react-google-button'
 
 
 function Login(){
@@ -67,9 +68,9 @@ function Login(){
             <Button variant="contained" onClick = {() => navigate('/signup')}>Sign Up</Button>
             </div>
         </div>
-        <div className="mx-2 text-white">
-            <Button variant="contained" onClick = {handleClick}>Google +</Button>
-            </div>
+        <div className="flex flex-wrap justify-center my-4 text-white">
+            <GoogleButton variant="contained" onClick = {handleClick}/>
+        </div>
         </>
     )
 }

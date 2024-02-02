@@ -34,6 +34,38 @@ const getWorkout = async (req, res) => {
   res.status(200).json(workout)
 }
 
+//date range function
+const dateWorkouts = async (req, res) => {
+  
+  const user_id = req.user._id;
+  const dateRange = req.body;
+
+  console.log(user_id)
+
+  //Assuming dateRange is an object with startDate and endDate
+  const startDate = new Date(dateRange.startDate);
+  const endDate = new Date(dateRange.endDate);
+endDate.setDate(endDate.getDate() + 1);
+
+
+  console.log(startDate + ' ' + endDate)
+
+  try {
+      // Find workouts created within the date range
+      const workouts = await Workout.find({ user_id });
+  console.log(workouts)
+// Filter the workouts based on the date range
+const filteredWorkouts = workouts.filter(workout => {
+    const createdAtDate = new Date(workout.createdAt);
+    return createdAtDate >= startDate && createdAtDate <= endDate;
+});
+
+      res.status(200).json(filteredWorkouts);
+  } catch (error) {
+      console.error("Error fetching workouts:", error);
+      res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 // create new workout
 const createWorkout = async (req, res) => {
@@ -112,5 +144,6 @@ module.exports = {
   categoryWorkouts,
   createWorkout,
   deleteWorkout,
-  updateWorkout
+  updateWorkout,
+  dateWorkouts
 }
