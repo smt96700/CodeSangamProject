@@ -81,7 +81,7 @@ function Wait() {
         .then((json) => {
             localStorage.setItem('user', JSON.stringify(json));
             dispatch({ type: 'LOGIN', payload: json });
-            navigate("/login");
+            navigate("/");
         })
         .catch((err) => {
           console.log(err);
