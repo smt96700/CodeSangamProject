@@ -2,7 +2,7 @@
 
 Expense Buddy is a simple and intuitive expense tracking application designed to help you manage your finances effortlessly. Whether you're tracking personal expenses or managing a budget for a project, Expense Buddy has got you covered.
 
-Our website is hosted on [Expense Buddy]([https://expense-buddy-zeta.vercel.app](https://expense-buddy-ten.vercel.app/login))
+Our website is hosted on [Expense Buddy](https://expense-buddy-ten.vercel.app/login)
 
 ## Features
 
